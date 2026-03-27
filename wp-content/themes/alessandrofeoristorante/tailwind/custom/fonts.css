@@ -3,3 +3,47 @@
  *
  * These will be added immediately before Tailwind’s `base` layer.
  */
+
+/* Special Elite Regular → font-typewriter */
+@font-face {
+    font-family: "typewriter";
+    src: url("font/SpecialElite-Regular.woff2") format("woff2"),
+         url("font/SpecialElite-Regular.woff") format("woff"),
+         url("font/SpecialElite-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Morning Memories Doodles → font-doodles */
+@font-face {
+    font-family: "doodles";
+    src: url("font/morning-memories-doodles.woff2") format("woff2"),
+         url("font/morning-memories-doodles.woff") format("woff"),
+         url("font/morning-memories-doodles.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Morning Memories Script → font-script */
+@font-face {
+    font-family: "script";
+    src: url("font/morning-memories-script.woff2") format("woff2"),
+         url("font/morning-memories-script.woff") format("woff"),
+         url("font/morning-memories-script.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* New Icon Serif → font-icon-serif */
+@font-face {
+    font-family: "icon-serif";
+    src: url("font/new-icon-serif_fontlotec05.woff2") format("woff2"),
+         url("font/new-icon-serif_fontlotec05.woff") format("woff"),
+         url("font/new-icon-serif_fontlotec05.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

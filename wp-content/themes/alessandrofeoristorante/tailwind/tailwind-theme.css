@@ -47,4 +47,10 @@
 	/**
 	 * Add your theme below:
 	 */
+	--font-typewriter: 'typewriter';
+	--font-doodles: 'doodles';
+	--font-script: 'script';
+	--font-icon-serif: 'icon-serif';
+	--color-gold: #C9B47C;
+	--color-blue: #23222D;
 }
