@@ -12,7 +12,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
-import Lenis from 'lenis'
+import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,7 +111,7 @@ const MOON_PHASE_NAMES = [
  *   sweep=0 → curva a DESTRA   (ombra sul lato destro)
  */
 function getMoonPhaseSVG(phaseIndex) {
-	const open    = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">`;
+	const open = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">`;
 	const outline = `<circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.35)" stroke-width="1" fill="rgba(255,255,255,0.05)"/>`;
 
 	switch (phaseIndex) {
@@ -153,22 +153,23 @@ function getMoonPhaseSVG(phaseIndex) {
  * Riferimento: luna nuova del 6 gennaio 2000 alle 18:14 UTC.
  */
 function calcMoonPhaseIndex() {
-	const now             = new Date();
-	const knownNewMoon    = new Date( Date.UTC( 2000, 0, 6, 18, 14, 0 ) );
-	const lunarCycleDays  = 29.530588853;
-	const daysSince       = ( now.getTime() - knownNewMoon.getTime() ) / 86400000;
-	const age             = ( ( daysSince % lunarCycleDays ) + lunarCycleDays ) % lunarCycleDays;
-	return Math.round( ( age / lunarCycleDays ) * 8 ) % 8;
+	const now = new Date();
+	const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+	const lunarCycleDays = 29.530588853;
+	const daysSince = (now.getTime() - knownNewMoon.getTime()) / 86400000;
+	const age =
+		((daysSince % lunarCycleDays) + lunarCycleDays) % lunarCycleDays;
+	return Math.round((age / lunarCycleDays) * 8) % 8;
 }
 
 function initMoonPhase() {
-	const iconEl = document.getElementById( 'moon-phase-icon' );
-	const nameEl = document.getElementById( 'moon-phase-name' );
-	if ( ! iconEl || ! nameEl ) return;
+	const iconEl = document.getElementById('moon-phase-icon');
+	const nameEl = document.getElementById('moon-phase-name');
+	if (!iconEl || !nameEl) return;
 
-	const phase  = calcMoonPhaseIndex();
-	iconEl.innerHTML  = getMoonPhaseSVG( phase );
-	nameEl.textContent = MOON_PHASE_NAMES[ phase ];
+	const phase = calcMoonPhaseIndex();
+	iconEl.innerHTML = getMoonPhaseSVG(phase);
+	nameEl.textContent = MOON_PHASE_NAMES[phase];
 }
 
 // ─────────────────────────────────────────────
@@ -180,53 +181,75 @@ const SVG_AUDIO_OFF = `<svg width="20" height="20" viewBox="0 0 24 24" fill="non
 // Altoparlante con onde sonore (Material Icons volume_up)
 const SVG_AUDIO_ON = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z" fill="white"/></svg>`;
 
-function initAudio() {
-	const btn     = document.getElementById( 'audio-toggle' );
-	const iconEl  = document.getElementById( 'audio-icon' );
-	const labelEl = document.getElementById( 'audio-label' );
-	const audio   = document.getElementById( 'mare-audio' );
+// Rileva qualsiasi browser su OS Apple (macOS, iOS, iPadOS)
+// Chrome/Firefox su Apple usano Core Text — stesse metriche font di Safari
+const appleOS = /Mac|iPhone|iPad|iPod/i.test(
+	navigator.userAgentData?.platform || navigator.platform || ''
+);
+if (appleOS) {
+	document.documentElement.classList.add('is-apple-os');
+}
 
-	if ( ! btn || ! iconEl || ! labelEl ) return;
+function initAudio() {
+	const btn = document.getElementById('audio-toggle');
+	const iconEl = document.getElementById('audio-icon');
+	const labelEl = document.getElementById('audio-label');
+	const audio = document.getElementById('mare-audio');
+
+	if (!btn || !iconEl || !labelEl) return;
 
 	// Nessun file audio configurato: bottone visivamente disabilitato
-	if ( ! audio || btn.dataset.noAudio === 'true' ) {
+	if (!audio || btn.dataset.noAudio === 'true') {
 		btn.style.opacity = '0.35';
-		btn.style.cursor  = 'not-allowed';
-		btn.setAttribute( 'title', 'File audio non configurato' );
+		btn.style.cursor = 'not-allowed';
+		btn.setAttribute('title', 'File audio non configurato');
 		return;
 	}
 
 	let playing = false;
 
-	btn.addEventListener( 'click', async () => {
-		if ( playing ) {
+	btn.addEventListener('click', async () => {
+		if (playing) {
 			audio.pause();
 			playing = false;
-			iconEl.innerHTML   = SVG_AUDIO_OFF;
+			iconEl.innerHTML = SVG_AUDIO_OFF;
 			labelEl.textContent = 'ASCOLTA IL MARE: OFF';
-			btn.setAttribute( 'aria-pressed', 'false' );
+			btn.setAttribute('aria-pressed', 'false');
 		} else {
 			try {
 				await audio.play();
 				playing = true;
-				iconEl.innerHTML   = SVG_AUDIO_ON;
+				iconEl.innerHTML = SVG_AUDIO_ON;
 				labelEl.textContent = 'ASCOLTA IL MARE: ON';
-				btn.setAttribute( 'aria-pressed', 'true' );
-			} catch ( e ) {
-				console.warn( 'Riproduzione audio non riuscita:', e );
+				btn.setAttribute('aria-pressed', 'true');
+			} catch (e) {
+				console.warn('Riproduzione audio non riuscita:', e);
 			}
 		}
-	} );
+	});
 
 	// Aggiorna stato se il browser interrompe l'audio (es. tab in background)
-	audio.addEventListener( 'pause', () => {
-		if ( playing ) {
+	audio.addEventListener('pause', () => {
+		if (playing) {
 			playing = false;
-			iconEl.innerHTML   = SVG_AUDIO_OFF;
+			iconEl.innerHTML = SVG_AUDIO_OFF;
 			labelEl.textContent = 'ASCOLTA IL MARE: OFF';
-			btn.setAttribute( 'aria-pressed', 'false' );
+			btn.setAttribute('aria-pressed', 'false');
 		}
-	} );
+	});
+
+	// Fix bfcache Safari: quando si torna indietro la pagina viene ripristinata
+	// dalla cache con l'audio ancora in riproduzione ma lo stato JS resettato
+	window.addEventListener('pageshow', (e) => {
+		if (e.persisted && !audio.paused) {
+			audio.pause();
+			audio.currentTime = 0;
+			playing = false;
+			iconEl.innerHTML = SVG_AUDIO_OFF;
+			labelEl.textContent = 'ASCOLTA IL MARE: OFF';
+			btn.setAttribute('aria-pressed', 'false');
+		}
+	});
 }
 
 // ─────────────────────────────────────────────
@@ -236,35 +259,53 @@ function initAudio() {
 function initHeroDate() {
 	var el = document.getElementById('hero-date');
 	if (!el) return;
-	var now  = new Date();
+	var now = new Date();
 	var opts = { day: 'numeric', month: 'long', year: 'numeric' };
 	el.textContent = now.toLocaleDateString('it-IT', opts).toUpperCase();
 }
 
-document.addEventListener( 'DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 	initMoonPhase();
 	initAudio();
 	initHeroDate();
 	initRottaSection();
 	initGalleryPolaroid();
 	initMareSection();
-} );
+	initMareMadreSection();
+	initMenuSection();
+	initEventiMarquee();
+	initFeoFriendsSwiper();
+	// Ricalcola tutte le posizioni ScrollTrigger dopo il rendering iniziale.
+	ScrollTrigger.refresh();
+});
 
 // ─────────────────────────────────────────────
-// ROTTA SECTION — marquee infinito + scroll animation
+// FEO & FRIENDS SWIPER — cards effect
 // ─────────────────────────────────────────────
+
+function initFeoFriendsSwiper() {
+	const el = document.querySelector('.feo-friends-swiper');
+	if (!el) return;
+
+	new Swiper('.feo-friends-swiper', {
+		effect: 'cards',
+		grabCursor: true,
+		centeredSlides: true,
+		loop: true,
+	});
+}
 
 function initRottaSection() {
-	const section = document.querySelector( '.rotta-section' );
-	if ( ! section ) return;
+	const section = document.querySelector('.rotta-section');
+	if (!section) return;
 
 	// ── MARQUEE INFINITO ──────────────────────
-	const track = section.querySelector( '.rotta-marquee-track' );
-	if ( track ) {
+	const track = section.querySelector('.rotta-marquee-track');
+	if (track) {
 		// Duplica i figli per loop seamless
-		Array.from( track.children ).forEach( child => {
-			track.appendChild( child.cloneNode( true ) );
-		} );
+		Array.from(track.children).forEach((child) => {
+			track.appendChild(child.cloneNode(true));
+		});
 
 		// Larghezza di un singolo ciclo (metà del totale dopo la duplicazione)
 		const singleWidth = track.scrollWidth / 2;
@@ -282,8 +323,8 @@ function initRottaSection() {
 	}
 
 	// ── SCROLL ANIMATION: clip-path + rotation ────
-	const imgClip = section.querySelector( '.rotta-img-clip' );
-	if ( imgClip ) {
+	const imgClip = section.querySelector('.rotta-img-clip');
+	if (imgClip) {
 		gsap.fromTo(
 			imgClip,
 			{
@@ -310,56 +351,62 @@ function initRottaSection() {
 // ─────────────────────────────────────────────
 
 function initGalleryPolaroid() {
-	const section = document.querySelector( '.gallery-polaroid-section' );
-	if ( ! section ) return;
+	const sections = document.querySelectorAll('.gallery-polaroid-section');
+	if (!sections.length) return;
 
-	const itemsLeft  = section.querySelectorAll( '.gallery-polaroid-item--left' );
-	const itemsRight = section.querySelectorAll( '.gallery-polaroid-item--right' );
+	const triggerStart = 'top 95%';
+	const triggerEnd = 'top top';
 
-	const triggerStart = 'top 25%';
-	const triggerEnd   = 'top -20%';
-
-	// Items che arrivano da sinistra (idx 0, 1)
-	if ( itemsLeft.length ) {
-		gsap.fromTo(
-			itemsLeft,
-			{
-				xPercent: -45,
-			},
-			{
-				xPercent: 0,
-				ease: 'sine.out',
-				stagger: 0.08,
-				scrollTrigger: {
-					trigger: section,
-					start: triggerStart,
-					end: triggerEnd,
-					scrub: 3,
-				},
-			}
+	sections.forEach((section) => {
+		const itemsLeft = section.querySelectorAll(
+			'.gallery-polaroid-item--left'
 		);
-	}
-
-	// Items che arrivano da destra (idx 2, 3)
-	if ( itemsRight.length ) {
-		gsap.fromTo(
-			itemsRight,
-			{
-				xPercent: 45,
-			},
-			{
-				xPercent: 0,
-				ease: 'sine.out',
-				stagger: 0.08,
-				scrollTrigger: {
-					trigger: section,
-					start: triggerStart,
-					end: triggerEnd,
-					scrub: 3,
-				},
-			}
+		const itemsRight = section.querySelectorAll(
+			'.gallery-polaroid-item--right'
 		);
-	}
+
+		// Items che arrivano da sinistra (idx 0, 1)
+		if (itemsLeft.length) {
+			gsap.fromTo(
+				itemsLeft,
+				{
+					xPercent: -45,
+				},
+				{
+					xPercent: 0,
+					ease: 'sine.out',
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: section,
+						start: triggerStart,
+						end: triggerEnd,
+						scrub: 1,
+					},
+				}
+			);
+		}
+
+		// Items che arrivano da destra (idx 2, 3)
+		if (itemsRight.length) {
+			gsap.fromTo(
+				itemsRight,
+				{
+					xPercent: 45,
+				},
+				{
+					xPercent: 0,
+					ease: 'sine.out',
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: section,
+						start: triggerStart,
+						end: triggerEnd,
+						scrub: 3,
+					},
+				}
+			);
+		}
+	});
 }
 
 // ─────────────────────────────────────────────
@@ -367,113 +414,273 @@ function initGalleryPolaroid() {
 // ─────────────────────────────────────────────
 
 function initMareSection() {
-	const section     = document.querySelector( '.mare-video-section' );
-	if ( ! section ) return;
+	const sections = document.querySelectorAll('.mare-video-section');
+	if (!sections.length) return;
 
-	// ── MARQUEE INFINITO ──────────────────────
-	const track = section.querySelector( '.mare-marquee-track' );
-	if ( track ) {
-		Array.from( track.children ).forEach( child => {
-			track.appendChild( child.cloneNode( true ) );
-		} );
-		const singleWidth = track.scrollWidth / 2;
-		gsap.fromTo(
-			track,
-			{ x: 0 },
-			{ x: -singleWidth, duration: 28, ease: 'none', repeat: -1 }
-		);
-	}
-
-	// ── SEZIONE SUCCESSIVA: effetto "footer overlap" ─────────────────────────
-	const nextSection = section.nextElementSibling;
-	if ( nextSection ) {
-		const getOverlap   = () => Math.min( window.innerHeight, nextSection.offsetHeight );
-		const adjustMargin = () => { nextSection.style.marginTop = -getOverlap() + 'px'; };
-		adjustMargin();
-		ScrollTrigger.addEventListener( 'revert', adjustMargin );
-		ScrollTrigger.create( {
-			trigger: nextSection,
-			start: () => 'top ' + ( window.innerHeight - getOverlap() ),
-			end: () => '+=' + getOverlap(),
-			pin: true,
-		} );
-	}
-
-	// ── VIDEO FRAME — stato iniziale piccolo + ruotato ────
-	const frame = section.querySelector( '.mare-video-frame' );
-	const btn   = section.querySelector( '.mare-toggle-btn' );
-	const label = section.querySelector( '.mare-toggle-label' );
-	if ( ! frame ) return;
-
-	gsap.set( frame, { scale: 0.42, rotation: -5, transformOrigin: 'center center' } );
-
-	// ── APPROCCIO MANUALE: ScrollTrigger legge il progresso, ticker lerp lo applica ────
-	// Non usiamo "animation + scrub" (che crea un tween interno incontrollabile).
-	// Invece: ST aggiorna rawProgress → ticker fa lerp smooth → applica al tween.
-	// Questo ci permette di stoppare/riavviare l’animazione senza glitch.
-	const mareTween = gsap.to( frame, {
-		scale: 1,
-		rotation: 0,
-		ease: 'none',
-		paused: true,
-	} );
-
-	let rawProgress    = 0; // progresso reale dello scroll (0-1)
-	let smoothProgress = 0; // progresso smoothed applicato al tween
-	let stActive       = true; // false = bottone ha disabilitato l’animazione
-
-	ScrollTrigger.create( {
-		trigger: section,
-		start: 'top bottom',   // entra dal fondo del viewport
-		end: 'bottom bottom',  // finisce quando il bottom della section = bottom del viewport
-		onUpdate: ( self ) => {
-			rawProgress = self.progress;
-		},
-	} );
-
-	// Lerp factor ~0.04 ≈ scrub 2s a 60fps
-	gsap.ticker.add( () => {
-		if ( ! stActive ) return;
-		smoothProgress += ( rawProgress - smoothProgress ) * 0.04;
-		mareTween.progress( smoothProgress );
-	} );
-
-	// ── BOTTONE CHIUDI / APRI ────────────────────────────────────
-	if ( ! btn || ! label ) return;
-
-	let btnState   = 'open'; // ‘open’ = animazione attiva
-	let closeTween = null;   // traccia il tween di ritorno (non uccidere mai mareTween)
-
-	btn.addEventListener( 'click', () => {
-		if ( btnState === 'open' ) {
-			// ── CHIUDI: ferma il ticker e ripristina lo stato iniziale del frame ──
-			stActive = false;
-			if ( closeTween ) closeTween.kill();
-			closeTween = gsap.to( frame, {
-				scale: 0.42,
-				rotation: -5,
-				duration: 0.9,
-				ease: 'power2.inOut',
-				onComplete: () => {
-					smoothProgress = 0;
-					mareTween.progress( 0 );
-					closeTween = null;
-				},
-			} );
-			label.textContent = 'APRI';
-			btn.setAttribute( 'aria-label', 'Apri il video' );
-			btnState = 'closed';
-
-		} else {
-			// ── APRI: ferma eventuale tween di chiusura, resetta mareTween e riattiva il ticker ──
-			if ( closeTween ) { closeTween.kill(); closeTween = null; }
-			smoothProgress = 0;
-			mareTween.progress( 0 );
-			stActive = true;
-			label.textContent = 'CHIUDI';
-			btn.setAttribute( 'aria-label', 'Chiudi il video' );
-			btnState = 'open';
+	sections.forEach((section) => {
+		// ── MARQUEE INFINITO ──────────────────────
+		const track = section.querySelector('.mare-marquee-track');
+		if (track) {
+			Array.from(track.children).forEach((child) => {
+				track.appendChild(child.cloneNode(true));
+			});
+			const singleWidth = track.scrollWidth / 2;
+			gsap.fromTo(
+				track,
+				{ x: 0 },
+				{ x: -singleWidth, duration: 28, ease: 'none', repeat: -1 }
+			);
 		}
-	} );
+
+		// ── VIDEO FRAME — stato iniziale piccolo + ruotato ────
+		const frame = section.querySelector('.mare-video-frame');
+		const btn = section.querySelector('.mare-toggle-btn');
+		const label = section.querySelector('.mare-toggle-label');
+		if (!frame) return;
+
+		gsap.set(frame, {
+			scale: 0.42,
+			rotation: -5,
+			transformOrigin: 'center center',
+		});
+
+		// ── APPROCCIO MANUALE: ScrollTrigger legge il progresso, ticker lerp lo applica ────
+		// Non usiamo "animation + scrub" (che crea un tween interno incontrollabile).
+		// Invece: ST aggiorna rawProgress → ticker fa lerp smooth → applica al tween.
+		// Questo ci permette di stoppare/riavviare l'animazione senza glitch.
+		const mareTween = gsap.to(frame, {
+			scale: 1,
+			rotation: 0,
+			ease: 'none',
+			paused: true,
+		});
+
+		let rawProgress = 0; // progresso reale dello scroll (0-1)
+		let smoothProgress = 0; // progresso smoothed applicato al tween
+		let stActive = true; // false = bottone ha disabilitato l'animazione
+
+		// Usa la section come trigger: l'animazione video parte quando
+		// la section entra dal fondo e finisce quando il suo bottom
+		// raggiunge il fondo del viewport.
+		ScrollTrigger.create({
+			trigger: section,
+			start: 'top bottom',
+			end: 'bottom bottom',
+			invalidateOnRefresh: true,
+			onUpdate: (self) => {
+				rawProgress = self.progress;
+			},
+		});
+
+		// Lerp factor ~0.04 ≈ scrub 2s a 60fps
+		gsap.ticker.add(() => {
+			if (!stActive) return;
+			smoothProgress += (rawProgress - smoothProgress) * 0.04;
+			mareTween.progress(smoothProgress);
+		});
+
+		// ── SEZIONE MARE-MADRE: pin + margin negativo ─────────────────────────
+		// La mare-madre viene pinned da GSAP mentre appare dietro al video.
+		// Il margin negativo la posiziona visivamente sopra (dietro) il video.
+		// Poiché sono entrambe DENTRO il wrapper, il pin spacer GSAP resta
+		// confinato nel wrapper e non sposta i trigger delle sezioni esterne.
+		const nextSection = section.nextElementSibling;
+		if (
+			nextSection &&
+			nextSection.classList.contains('mare-madre-section')
+		) {
+			const getOverlap = () =>
+				Math.min(window.innerHeight, nextSection.offsetHeight);
+
+			const adjustMargin = () => {
+				nextSection.style.marginTop = -getOverlap() + 'px';
+			};
+			adjustMargin();
+			ScrollTrigger.addEventListener('refresh', adjustMargin);
+
+			ScrollTrigger.create({
+				trigger: nextSection,
+				start: () => 'top ' + (window.innerHeight - getOverlap()),
+				end: () => '+=' + getOverlap(),
+				pin: true,
+				invalidateOnRefresh: true,
+			});
+		}
+
+		// ── BOTTONE CHIUDI / APRI ────────────────────────────────────
+		if (!btn || !label) return;
+
+		let btnState = 'open'; // 'open' = animazione attiva
+		let closeTween = null; // traccia il tween di ritorno (non uccidere mai mareTween)
+
+		btn.addEventListener('click', () => {
+			if (btnState === 'open') {
+				// ── CHIUDI: ferma il ticker e ripristina lo stato iniziale del frame ──
+				stActive = false;
+				if (closeTween) closeTween.kill();
+				closeTween = gsap.to(frame, {
+					scale: 0.42,
+					rotation: -5,
+					duration: 0.9,
+					ease: 'power2.inOut',
+					onComplete: () => {
+						smoothProgress = 0;
+						mareTween.progress(0);
+						closeTween = null;
+					},
+				});
+				label.textContent = 'APRI';
+				btn.setAttribute('aria-label', 'Apri il video');
+				btnState = 'closed';
+			} else {
+				// ── APRI: ferma eventuale tween di chiusura, resetta mareTween e riattiva il ticker ──
+				if (closeTween) {
+					closeTween.kill();
+					closeTween = null;
+				}
+				smoothProgress = 0;
+				mareTween.progress(0);
+				stActive = true;
+				label.textContent = 'CHIUDI';
+				btn.setAttribute('aria-label', 'Chiudi il video');
+				btnState = 'open';
+			}
+		});
+	});
 }
 
+// ─────────────────────────────────────────────
+// MENU SECTION — hover via CSS, solo parallax mouse via GSAP
+// ─────────────────────────────────────────────
+
+function initMenuSection() {
+	const section = document.querySelector('.menu-section');
+	if (!section) return;
+
+	const isDesktop = () => window.innerWidth >= 1024;
+
+	section.querySelectorAll('.menu-tab').forEach((tab) => {
+		const imgWrapper = tab.querySelector('.menu-tab-img');
+		if (!imgWrapper) return;
+
+		// Mouseleave — riporta l'immagine al centro
+		tab.addEventListener('mouseleave', () => {
+			if (!isDesktop()) return;
+			gsap.to(imgWrapper, {
+				x: 0,
+				duration: 0.6,
+				ease: 'power2.out',
+			});
+		});
+
+		// Mousemove — piccolo parallax sull'immagine
+		tab.addEventListener('mousemove', (e) => {
+			if (!isDesktop()) return;
+			const rect = tab.getBoundingClientRect();
+			const cx = (e.clientX - rect.left) / rect.width - 0.8;
+			gsap.to(imgWrapper, {
+				x: cx * 100,
+				duration: 0.9,
+				ease: 'power2.out',
+				overwrite: true,
+			});
+		});
+	});
+}
+
+// ─────────────────────────────────────────────
+// MARE MADRE SECTION — foto slide-in + rotate dai lati
+// Parte quando la sezione video esce dal viewport
+// ─────────────────────────────────────────────
+
+function initMareMadreSection() {
+	const sections = document.querySelectorAll('.mare-madre-section');
+	if (!sections.length) return;
+
+	sections.forEach((section) => {
+		// Trigger: bottom della sezione video sta per toccare il top del viewport
+		const prevEl = section.previousElementSibling;
+		const videoSection =
+			prevEl && prevEl.classList.contains('mare-video-section')
+				? prevEl
+				: null;
+		const triggerEl = videoSection || section;
+		const stStart = videoSection ? 'bottom top' : 'top 85%';
+
+		const tweenDefaults = {
+			duration: 1.4,
+			ease: 'power3.out',
+			scrollTrigger: {
+				trigger: triggerEl,
+				start: stStart,
+				scrub: 1,
+			},
+		};
+
+		// Desktop sinistra — entra da sinistra con rotazione
+		const desktopLeft = section.querySelectorAll('.mare-madre-from-left');
+		if (desktopLeft.length) {
+			gsap.fromTo(
+				desktopLeft,
+				{ x: '-60vw', rotation: -25 },
+				{ x: 0, rotation: -9, ...tweenDefaults }
+			);
+		}
+
+		// Desktop destra — entra da destra con rotazione
+		const desktopRight = section.querySelectorAll('.mare-madre-from-right');
+		if (desktopRight.length) {
+			gsap.fromTo(
+				desktopRight,
+				{ x: '60vw', rotation: 25 },
+				{ x: 0, rotation: 7, ...tweenDefaults }
+			);
+		}
+
+		// Mobile sinistra
+		const mobileLeft = section.querySelectorAll('.mare-madre-mobile-left');
+		if (mobileLeft.length) {
+			gsap.fromTo(
+				mobileLeft,
+				{ x: '-60vw', rotation: -25 },
+				{ x: 0, rotation: -6, ...tweenDefaults }
+			);
+		}
+
+		// Mobile destra
+		const mobileRight = section.querySelectorAll(
+			'.mare-madre-mobile-right'
+		);
+		if (mobileRight.length) {
+			gsap.fromTo(
+				mobileRight,
+				{ x: '60vw', rotation: 25 },
+				{ x: 0, rotation: 5, ...tweenDefaults }
+			);
+		}
+	});
+}
+
+// ─────────────────────────────────────────────
+// EVENTI MARQUEE — banner diagonale bg-blue, loop infinito
+// ─────────────────────────────────────────────
+
+function initEventiMarquee() {
+	const section = document.querySelector('.eventi-marquee-section');
+	if (!section) return;
+
+	const track = section.querySelector('.eventi-marquee-track');
+	if (!track) return;
+
+	Array.from(track.children).forEach((child) => {
+		track.appendChild(child.cloneNode(true));
+	});
+
+	const singleWidth = track.scrollWidth / 2;
+
+	gsap.fromTo(
+		track,
+		{ x: 0 },
+		{ x: -singleWidth, duration: 25, ease: 'none', repeat: -1 }
+	);
+}

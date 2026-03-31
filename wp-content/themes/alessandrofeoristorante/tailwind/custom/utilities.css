@@ -51,6 +51,30 @@
 }
 
 /* ─────────────────────────────────────────
+   MARE VIDEO WRAPPER — reveal from under
+   Il video (z:2) scorre normalmente.
+   La mare-madre (z:1) viene pinned da GSAP
+   con margin-top negativo: appare ferma
+   mentre il video la scorre sopra.
+   Il pin spacer GSAP resta dentro il wrapper
+   così le sezioni esterne non sono toccate.
+   ───────────────────────────────────────── */
+.mare-video-wrapper {
+	position: relative;
+	isolation: isolate;
+}
+
+.mare-video-wrapper .mare-video-section {
+	position: relative;
+	z-index: 2;
+}
+
+.mare-video-wrapper .mare-madre-section {
+	position: relative;
+	z-index: 1;
+}
+
+/* ─────────────────────────────────────────
    GALLERY POLAROID — layout overlap desktop
    ───────────────────────────────────────── */
 

@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.1');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.14');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -424,13 +424,13 @@ function get_custom_responsive_video($video_id, $classes = '', $poster_url = '')
             video.addEventListener("loadedmetadata", function() {
                 console.log("Video duration:", video.duration);
             });
-            
+
             video.addEventListener("ended", function() {
                 console.log("Video ended, restarting...");
                 video.currentTime = 0;
                 video.play();
             });
-            
+
             // Assicurati che il video parta
             video.addEventListener("canplay", function() {
                 if (video.paused) {
@@ -445,7 +445,7 @@ function get_custom_responsive_video($video_id, $classes = '', $poster_url = '')
 }
 /**
  * Get video ID from URL
- * 
+ *
  * @param string $video_url The URL of the video in the media library
  * @return int|false The attachment ID if found, false otherwise
  */
@@ -475,3 +475,25 @@ function get_video_id_from_url($video_url)
 
 	return !empty($attachment[0]) ? (int) $attachment[0] : false;
 }
+
+
+add_action( 'wpcf7_init', function() {
+    wpcf7_add_form_tag( [ 'time', 'time*' ], function( $tag ) {
+        $tag = new WPCF7_FormTag( $tag );
+        $atts = array(
+            'type'  => 'time',
+            'name'  => $tag->name,
+            'class' => $tag->get_class_option( 'wpcf7-time' ),
+        );
+        if ( $tag->is_required() ) {
+            $atts['required'] = '';
+            $atts['aria-required'] = 'true';
+        }
+        $html = sprintf(
+            '<span class="wpcf7-form-control-wrap" data-name="%1$s"><input %2$s /></span>',
+            esc_attr( $tag->name ),
+            wpcf7_format_atts( $atts )
+        );
+        return $html;
+    }, [ 'name-attr' => true ] );
+} );

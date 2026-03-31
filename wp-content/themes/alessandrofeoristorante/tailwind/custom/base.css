@@ -7,5 +7,156 @@
  * file and is applied both to the front end and in the block editor.
  */
 body {
-	@apply bg-white text-foreground font-sans;
+	@apply text-foreground bg-white font-sans;
+}
+
+/* ─── FEO & FRIENDS SWIPER ─────────────────── */
+.feo-friends-swiper {
+	overflow: visible !important;
+	width: 320px;
+	height: 320px;
+}
+.feo-friends-swiper .swiper-slide {
+	border-radius: 2px;
+	width: 100%;
+	height: 100%;
+}
+.feo-friends-card {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.feo-friends-cards-wrapper {
+	overflow: visible;
+	padding: 20px 60px;
+}
+
+/* ─── RISERVA IL TUO TAVOLO — form prenotazione ─ */
+.riserva-card {
+	border-radius: 2px;
+}
+
+/* Tutti i campi input/textarea CF7 */
+.riserva-section .wpcf7-form .riserva-field {
+	margin-bottom: 1.5rem;
+	position: relative;
+}
+
+.riserva-section .wpcf7-form-control:not([type="submit"]):not([type="checkbox"]) {
+	width: 100%;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #23222D;
+	border-radius: 0;
+	padding: 0.5rem 0;
+	font-family: var(--font-typewriter);
+	font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+	color: #23222D;
+	outline: none;
+	appearance: none;
+	-webkit-appearance: none;
+	box-shadow: none;
+}
+
+.riserva-section .wpcf7-form-control::placeholder {
+	color: #23222D;
+	opacity: 0.6;
+}
+
+.riserva-section .wpcf7-form-control:focus {
+	outline: none;
+	border-bottom-color: #23222D;
+}
+
+.riserva-section .wpcf7-textarea {
+	min-height: 80px;
+	resize: none;
+}
+
+/* Icona calendario */
+.riserva-section input[type="date"]::-webkit-calendar-picker-indicator,
+.riserva-section input[type="time"]::-webkit-calendar-picker-indicator {
+	opacity: 0.45;
+	cursor: pointer;
+}
+
+/* Separatore sopra checkbox */
+.riserva-section .riserva-acceptance {
+	border-top: 1px solid #23222D;
+	padding-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+/* Checkbox */
+.riserva-section .wpcf7-acceptance {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.65rem;
+	font-family: var(--font-typewriter);
+	font-size: clamp(0.6rem, 0.82vw, 0.72rem);
+	color: #23222D;
+	line-height: 1.7;
+	cursor: pointer;
+}
+
+.riserva-section .wpcf7-acceptance .wpcf7-list-item {
+	margin: 0;
+}
+
+.riserva-section .wpcf7-acceptance input[type="checkbox"] {
+	flex-shrink: 0;
+	width: 13px;
+	height: 13px;
+	margin-top: 3px;
+	border: 1px solid #23222D;
+	background: transparent;
+	appearance: none;
+	-webkit-appearance: none;
+	cursor: pointer;
+	border-radius: 0;
+}
+
+.riserva-section .wpcf7-acceptance input[type="checkbox"]:checked {
+	background-color: #23222D;
+}
+
+/* Submit button */
+.riserva-section .wpcf7-submit {
+	display: block;
+	margin: 1.5rem auto 0;
+	font-family: var(--font-typewriter);
+	font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: #23222D;
+	background: transparent;
+	border: 1px solid #23222D;
+	border-radius: 9999px;
+	padding: 0.9rem 2.5rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.riserva-section .wpcf7-submit:hover {
+	background-color: #23222D;
+	color: #fff;
+}
+.feo-friends-swiper {
+	overflow: visible !important;
+	width: 420px;
+	height: 420px;
+}
+.feo-friends-swiper .swiper-slide {
+	border-radius: 2px;
+	width: 100%;
+	height: 100%;
+}
+.feo-friends-card {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.feo-friends-cards-wrapper {
+	overflow: visible;
+	padding: 20px 60px;
 }
