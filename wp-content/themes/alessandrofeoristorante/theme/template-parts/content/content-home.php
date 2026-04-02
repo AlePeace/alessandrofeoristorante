@@ -92,25 +92,24 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<!-- TESTO SINISTRA — font script -->
-		<div class="absolute bottom-26 lg:bottom-42 left-[3%] -translate-x-1/2 z-20 w-1/2 lg:w-1/3 pointer-events-none -rotate-3">
-			<p class="font-script text-white text-center text-2xl lg:text-3xl xl:text-4xl leading-[1.6] opacity-90 m-0">
+		<div class="hero-text-left hidden lg:block absolute bottom-26 lg:bottom-42 left-0 z-20 w-1/2 lg:w-1/6 pointer-events-none">
+			<p class="font-script text-white text-center text-2xl lg:text-4xl xl:text-4xl leading-8.5 opacity-90 m-0">
 				<?php echo nl2br(esc_html($text_left)); ?>
 			</p>
 		</div>
 
 		<!-- TESTO DESTRA — font script -->
-		<div class="absolute bottom-10 lg:bottom-26 -right-[25%] lg:-right-[15%] z-20 w-1/2 lg:w-1/3 text-center pointer-events-none -rotate-6">
-			<p class="font-script text-white text-2xl lg:text-3xl leading-[1.6] opacity-100">
+		<div class="hero-text-right hidden lg:block absolute bottom-10 lg:bottom-26 lg:right-0 z-20 w-1/2 lg:w-1/6 text-center pointer-events-none">
+			<p class="font-script text-white text-2xl lg:text-4xl leading-8.5 opacity-100">
 				<?php echo nl2br(esc_html($text_right)); ?>
 			</p>
 		</div>
 
-		<!-- FRECCIA GIÙ — lettera Y in Morning Memories Doodles -->
-		<div class="absolute bottom-[8%] left-1/2 -translate-x-1/3 lg:-translate-x-2/3 z-20 pointer-events-none rotate-90">
-			<span
-				class="font-doodles text-white text-9xl scale-180 block leading-none animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
-				aria-hidden="true">y</span>
-		</div>
+	 <div class="ipsilon-hero-wrapper absolute bottom-[8%] lg:bottom-[12%] left-1/2 -translate-x-1/2 rotate-90 z-20 pointer-events-none">
+      <span
+        class="ipsilon-hero font-doodles text-white text-9xl scale-180 block leading-none animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
+        aria-hidden="true">y</span>
+    </div>
 
 	</section>
 	<!-- ═══════════════════════════════════════════════
@@ -122,7 +121,7 @@ $text_right = $acf('hero_text_right')
 		<div class="absolute top-1/2 w-full -translate-y-1/2 z-20 pointer-events-none mix-blend-difference">
 			<div class="rotta-marquee-track flex whitespace-nowrap will-change-transform">
 				<?php for ($i = 0; $i < 8; $i++) : ?>
-					<h3 class="font-icon-serif text-white text-[7vw] uppercase tracking-[0.18em] leading-none select-none">LA MIA ROTTA</h3>
+					<h3 class="font-icon-serif text-white px-3 text-4xl lg:text-[6vw] uppercase leading-none select-none">LA MIA ROTTA</h3>
 				<?php endfor; ?>
 			</div>
 		</div>
@@ -134,8 +133,8 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<!-- CITAZIONE in basso a destra -->
-		<div class="hidden lg:block absolute bottom-24 -right-[5%] w-1/4 z-10 pointer-events-none -rotate-3">
-			<p class="font-script text-blue text-3xl leading-relaxed m-0">
+		<div class="hidden lg:block absolute bottom-24 right-5 w-1/4 z-10 pointer-events-none -rotate-3">
+			<p class="font-script text-blue text-3xl lg:text-4xl leading-8.5 m-0">
 				Seguo il mare, tolgo il superfluo e lascio parlare la materia prima.
 			</p>
 		</div>
@@ -166,7 +165,7 @@ $text_right = $acf('hero_text_right')
 		],
 		[
 			'url'  => get_site_url() . '/wp-content/uploads/2026/03/gallery-1-2.png',
-			'text' => __('Il mare cambia ogni giorno. Il piatto racconta solo quell\'attimo.', 'alessandrofeoristorante'),
+			'text' => __('Il mare cambia ogni giorno.<br> Il piatto racconta solo quell\'attimo.', 'alessandrofeoristorante'),
 			'text_pos' => 'top', // testo sopra
 		],
 		[
@@ -198,7 +197,7 @@ $text_right = $acf('hero_text_right')
 
 					<?php if ($img['text_pos'] === 'top') : ?>
 						<!-- Testo sopra immagine -->
-						<p class="gallery-polaroid-caption hidden lg:block font-script text-blue text-xl xl:text-2xl leading-[1.5] mb-4 -rotate-[2deg] text-center pointer-events-none">
+						<p class="gallery-polaroid-caption <?php echo $rot; ?> hidden lg:block font-script text-blue text-xl lg:text-4xl leading-8.5 mb-4 text-center pointer-events-none">
 							<?php echo wp_kses_post($img['text']); ?>
 						</p>
 					<?php endif; ?>
@@ -216,7 +215,7 @@ $text_right = $acf('hero_text_right')
 
 					<?php if ($img['text_pos'] === 'bottom') : ?>
 						<!-- Testo sotto immagine -->
-						<p class="gallery-polaroid-caption hidden lg:block font-script text-blue text-xl xl:text-2xl leading-[1.5] mt-4 rotate-[1.5deg] text-center pointer-events-none">
+						<p class="gallery-polaroid-caption <?php echo $rot; ?> hidden lg:block font-script text-blue text-xl lg:text-4xl leading-8.5 mt-4 text-center pointer-events-none">
 							<?php echo wp_kses_post($img['text']); ?>
 						</p>
 					<?php endif; ?>
@@ -264,11 +263,11 @@ $text_right = $acf('hero_text_right')
 
 		<!-- CITAZIONE FINALE — Morning Memories (font-script) -->
 		<div class="max-w-4xl mx-auto text-center pt-10 lg:pt-16 -rotate-3">
-			<p class="font-script text-blue text-[clamp(1.4rem,2.8vw,2.2rem)] leading-[1.7]">
-				La mia cucina nasce dall'incontro tra mare e<br>
-				terra, tra memoria e intuizione, lavorando<br>
-				ingredienti locali e stagionali, con interventi<br>
-				essenziali. Perché quando il prodotto è giusto,<br>
+			<p class="font-script text-blue text-[clamp(1.4rem,2.8vw,2.2rem)] leading-[34px]">
+				La mia cucina nasce dall'incontro tra mare e<br class="hidden lg:block">
+				terra, tra memoria e intuizione, lavorando<br class="hidden lg:block">
+					ingredienti locali e stagionali, con interventi<br class="hidden lg:block">
+						essenziali. Perché quando il prodotto è giusto,<br class="hidden lg:block">
 				la cucina deve solo accompagnarlo.
 			</p>
 		</div>
@@ -290,7 +289,7 @@ $text_right = $acf('hero_text_right')
 		<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
 			<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
 				<?php for ($i = 0; $i < 10; $i++) : ?>
-					<h3 class="font-icon-serif text-white text-[7vw] uppercase tracking-[0.18em] leading-none select-none px-4">MARE&nbsp;&nbsp;MADRE</h3>
+					<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase leading-none select-none px-6">MARE MADRE</h3>
 				<?php endfor; ?>
 			</div>
 		</div>
@@ -318,7 +317,7 @@ $text_right = $acf('hero_text_right')
 	?>
 	<section id="mmadre" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden" style="z-index:1;">
 
-		<div class="relative px-6 py-20 lg:py-32">
+		<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
 
 			<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
 			<div class="mare-madre-from-left hidden lg:block absolute top-24 left-[3%] w-[13%] pointer-events-none will-change-transform">
@@ -355,16 +354,16 @@ $text_right = $acf('hero_text_right')
 
 				<!-- Titolo principale — New Icon Serif -->
 				<h2 class="font-icon-serif text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.2] uppercase mb-10">
-					Mare Madre è la mia bussola.<br>
-					Ogni giorno il mare mi affida i suoi<br>
-					doni e io li trasformo senza tradirne<br>
+					Mare Madre è la mia bussola.<br class="hidden lg:block">
+					Ogni giorno il mare mi affida i suoi<br class="hidden lg:block">
+					doni e io li trasformo senza tradirne<br class="hidden lg:block">
 					la verità.
 				</h2>
 
 				<!-- Citazione corsivo — Morning Memories gold -->
-				<p class="font-script text-gold text-[clamp(1.2rem,2vw,1.7rem)] leading-[1.8] -rotate-2">
-					Mare Madre è la lotta silenziosa tra quello che<br>
-					l&rsquo;acqua decide di regalarmi e la mia<br>
+				<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
+					Mare Madre è la lotta silenziosa tra quello che<br class="hidden lg:block">
+					l&rsquo;acqua decide di regalarmi e la mia<br class="hidden lg:block">
 					responsabilità di portarlo a terra.
 				</p>
 
@@ -408,7 +407,7 @@ $text_right = $acf('hero_text_right')
 		<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
 			<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
 				<?php for ($i = 0; $i < 10; $i++) : ?>
-					<h3 class="font-icon-serif text-white text-[7vw] uppercase tracking-[0.18em] leading-none select-none px-4">L'ORTO</h3>
+					<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase tracking-[0.18em] leading-none select-none px-4">L'ORTO</h3>
 				<?php endfor; ?>
 			</div>
 		</div>
@@ -438,7 +437,7 @@ $text_right = $acf('hero_text_right')
 	?>
 	<section id="orto" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden h-full" style="z-index:1;">
 
-		<div class="relative px-6 py-20 lg:py-32">
+		<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
 
 			<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
 			<div class="mare-madre-from-left hidden lg:block absolute top-1/2 left-[3%] w-[13%] pointer-events-none will-change-transform">
@@ -481,10 +480,10 @@ $text_right = $acf('hero_text_right')
 				</h2>
 
 				<!-- Citazione corsivo — Morning Memories gold -->
-				<p class="font-script text-gold text-[clamp(1.2rem,2vw,1.7rem)] leading-[1.8] -rotate-2">
-					Ogni stagione cambia il colore degli orti<br>
-					e con esso cambia la cucina.<br>
-						Verdure, erbe e radici diventano parte della<br>
+				<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
+					Ogni stagione cambia il colore degli orti<br class="hidden lg:block">
+					e con esso cambia la cucina.<br class="hidden lg:block">
+						Verdure, erbe e radici diventano parte della<br class="hidden lg:block">
 							stessa storia che comincia al largo e finisce nel piatto.
 				</p>
 
@@ -519,13 +518,15 @@ $text_right = $acf('hero_text_right')
 	<style>
 		/* Posizionamento "i Menù" — default Chrome/Firefox */
 		.imenu-text {
-			margin-top: 1.8em;
+			margin-top: .9em;
 		}
 		/* Tutti i browser su OS Apple (macOS, iOS, iPadOS) — rilevato via JS */
 		.is-apple-os .imenu-text {
-			margin-top: 0.65em;
+			margin-top: 0.35em;
 		}
-
+		.is-apple-os .i-menu-arrow {
+			@apply translate-y-[10%]
+		}
 		@media (min-width: 1024px) {
 			.menu-tab {
 				background-color: #ffffff;
@@ -553,15 +554,18 @@ $text_right = $acf('hero_text_right')
 			.menu-tab:hover .menu-tab-img {
 				opacity: 1;
 			}
+			.imenu-text {
+				margin-top: 1em;
+			}
 		}
 	</style>
 	<section id="menu" class="menu-section w-full bg-white pt-10 lg:pt-0 relative z-50" style="border-top: 1px solid #23222D; border-bottom: 1px solid #23222D;">
 
 		<!-- "i Menù" — DESKTOP: in-flow, margin negativo per overlap su menu-header -->
-		<div class="hidden lg:flex items-center gap-2 pointer-events-none" style="margin-left: 50%; margin-bottom: -130px; transform: rotate(-3deg); transform-origin: left center;">
+		<div class="hidden i-menu-arrow lg:flex items-center gap-2 pointer-events-none" style="margin-left: 50%; margin-bottom: -130px; transform: rotate(-3deg); transform-origin: left center;">
 			<span class="inline-grid font-doodles text-blue text-[250px] leading-none tracking-[0.08em]">
 				<span style="grid-area:1/1">yi</span>
-				<span style="grid-area:1/1; align-self:start; justify-self:end; margin-right:2.5rem;" class="imenu-text font-script text-blue text-5xl leading-tight px-4 py-1">i&nbsp;Men&#xF9;</span>
+				<span style="grid-area:1/1; align-self:start; justify-self:end; margin-right:5rem;" class="imenu-text font-script text-blue text-center text-7xl leading-tight tracking-[0px] px-4 py-1">i&nbsp;Men&#xF9;</span>
 			</span>
 		</div>
 
@@ -572,7 +576,7 @@ $text_right = $acf('hero_text_right')
 			<div class="lg:hidden relative flex items-center justify-center gap-2 pointer-events-none overflow-hidden" style="transform: rotate(-3deg);">
 				<span class="inline-grid font-doodles text-blue text-[150px] leading-none tracking-[0.08em]">
 					<span style="grid-area:1/1">yi</span>
-					<span style="grid-area:1/1; align-self:start; justify-self:end; margin-right:1.25rem;" class="imenu-text font-script text-blue text-3xl leading-tight px-4">i&nbsp;Men&#xF9;</span>
+					<span style="grid-area:1/1; align-self:start; justify-self:end; margin-right:1.5rem;" class="imenu-text font-script text-blue text-5xl leading-tight tracking-[0px] px-4">i&nbsp;Men&#xF9;</span>
 				</span>
 
 			</div>
@@ -616,10 +620,10 @@ $text_right = $acf('hero_text_right')
 				</div>
 				<!-- Mobile: titolo e sottotitolo su righe separate -->
 				<div class="lg:hidden">
-					<h3 class="font-icon-serif text-blue text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
+					<h3 class="font-icon-serif text-blue group-hover:text-white text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
 						LE DUE ROTTE
 					</h3>
-					<span class="font-typewriter text-blue text-[0.7rem] tracking-[0.2em] uppercase">
+					<span class="font-typewriter text-blue group-hover:text-white text-[0.7rem] tracking-[0.2em] uppercase">
 						( MEN&Ugrave; DEGUSTAZIONE )
 					</span>
 				</div>
@@ -653,10 +657,10 @@ $text_right = $acf('hero_text_right')
 				</div>
 				<!-- Mobile -->
 				<div class="lg:hidden">
-					<h3 class="font-icon-serif text-blue text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
+					<h3 class="font-icon-serif text-blue group-hover:text-white text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
 						NAVIGAZIONE LIBERA
 					</h3>
-					<span class="font-typewriter text-blue text-[0.7rem] tracking-[0.2em] uppercase">
+					<span class="font-typewriter text-blue group-hover:text-white text-[0.7rem] tracking-[0.2em] uppercase">
 						( MEN&Ugrave; ALLA CARTA )
 					</span>
 				</div>
@@ -724,11 +728,11 @@ $text_right = $acf('hero_text_right')
 	     SEZIONE EVENTI — banner marquee diagonale bg-blue
 	     ═══════════════════════════════════════════════ -->
 	<div id="eventi" class="overflow-hidden">
-		<div class="relative overflow-hidden py-16 -rotate-3">
+		<div class="relative overflow-hidden py-16 -rotate-2">
 			<section class="eventi-marquee-section relative w-full bg-blue py-5 scale-110 overflow-hidden pointer-events-none">
 				<div class="eventi-marquee-track flex whitespace-nowrap will-change-transform">
-					<?php for ($i = 0; $i < 10; $i++) : ?>
-						<h3 class="font-icon-serif text-white text-6xl lg:text-8xl pt-3 lg:pt-5 uppercase tracking-[0.25em] leading-none select-none px-8">EVENTI</h3>
+					<?php for ($i = 0; $i < 16; $i++) : ?>
+						<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] pt-3 lg:pt-5 uppercase leading-none select-none px-1 lg:px-4">EVENTI</h3>
 					<?php endfor; ?>
 				</div>
 			</section>
@@ -772,34 +776,36 @@ $text_right = $acf('hero_text_right')
 			</div>
 
 			<!-- COLONNA DESTRA — Swiper cards -->
-			<div class="feo-friends-cards-wrapper p-5 overflow-hidden w-full lg:w-1/2 flex items-center justify-center">
-				<div class="swiper feo-friends-swiper overflow-hidden">
-					<div class="swiper-wrapper">
+			<div class="feo-friends-cards-wrapper p-10 overflow-hidden w-full lg:w-1/2 flex items-center justify-center">
+				<div class="aspect-square w-full max-w-[420px]">
+					<div class="swiper feo-friends-swiper">
+						<div class="swiper-wrapper">
 
-						<!-- Slide 1: card-1.png -->
-						<?php
-						$card1_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/card-1.png');
-						?>
-						<div class="swiper-slide p-10 aspect-square">
-							<div class="feo-friends-card overflow-hidden">
-								<?php if ($card1_id) : ?>
-									<?php echo get_custom_responsive_image($card1_id, 'large', 'block w-full h-auto object-cover aspect-square'); ?>
-								<?php else : ?>
-									<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/card-1.png'); ?>" alt="Feo &amp; Friends" class="block w-full h-full object-cover" loading="lazy">
-								<?php endif; ?>
+							<!-- Slide 1: card-1.png -->
+							<?php
+							$card1_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/card-1.png');
+							?>
+							<div class="swiper-slide">
+								<div class="feo-friends-card overflow-hidden">
+									<?php if ($card1_id) : ?>
+										<?php echo get_custom_responsive_image($card1_id, 'large', 'block w-full h-full object-cover'); ?>
+									<?php else : ?>
+										<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/card-1.png'); ?>" alt="Feo &amp; Friends" class="block w-full h-full object-cover" loading="lazy">
+									<?php endif; ?>
+								</div>
 							</div>
-						</div>
 
-						<!-- Slide 2: quadrato beige -->
-						<div class="swiper-slide">
-							<div class="feo-friends-card aspect-square" style="background-color: #E8DCC8;"></div>
-						</div>
+							<!-- Slide 2: quadrato beige -->
+							<div class="swiper-slide">
+								<div class="feo-friends-card" style="background-color: #E8DCC8;"></div>
+							</div>
 
-						<!-- Slide 3: quadrato blu -->
-						<div class="swiper-slide aspect-square">
-							<div class="feo-friends-card" style="background-color: #23222D;"></div>
-						</div>
+							<!-- Slide 3: quadrato blu -->
+							<div class="swiper-slide">
+								<div class="feo-friends-card" style="background-color: #23222D;"></div>
+							</div>
 
+						</div>
 					</div>
 				</div>
 			</div>

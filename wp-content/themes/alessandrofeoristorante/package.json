@@ -26,7 +26,8 @@
 		"production": "run-p \"production:**\"",
 		"prod": "npm run production",
 		"zip": "node node_scripts/zip.js alessandrofeoristorante",
-		"bundle": "run-s production zip"
+		"bundle": "run-s production zip",
+		"postinstall": "chmod -R +x node_modules/.bin node_modules/@esbuild/linux-x64/bin 2>/dev/null || true"
 	},
 	"devDependencies": {
 		"@_tw/typography": "^0.5.22",

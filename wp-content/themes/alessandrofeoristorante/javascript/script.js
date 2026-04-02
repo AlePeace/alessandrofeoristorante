@@ -62,6 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const lenis = initLenis();
 
+	// Su Apple (iOS/iPadOS/macOS Safari) aggiungiamo normalizeScroll per
+	// evitare il salto di scroll alla fine delle animazioni reveal.
+	// È sicuro con Lenis perché smoothTouch:false lascia il touch nativo.
+	if (appleOS) {
+		ScrollTrigger.normalizeScroll(true);
+	}
+
 	// Scroll to top function
 	window.scrollToTop = () => {
 		lenis.scrollTo(0);
@@ -264,14 +271,41 @@ function initHeroDate() {
 	el.textContent = now.toLocaleDateString('it-IT', opts).toUpperCase();
 }
 
+// ─────────────────────────────────────────────
+// HERO — testi sinistra/destra slide-in
+// ─────────────────────────────────────────────
+
+function initHeroTextAnimation() {
+	const left  = document.querySelector('.hero-text-left');
+	const right = document.querySelector('.hero-text-right');
+	if (!left && !right) return;
+
+	// Durata pari alla durata del video hero (~25 s)
+	const DURATION = 25;
+
+	if (left) {
+		gsap.fromTo(left,
+			{ xPercent: -30, rotation: -3 },
+			{ xPercent: 0,   rotation: -3, duration: DURATION, ease: 'power1.out' }
+		);
+	}
+	if (right) {
+		gsap.fromTo(right,
+			{ xPercent: 30, rotation: -6 },
+			{ xPercent: 0,  rotation: -6, duration: DURATION, ease: 'power1.out' }
+		);
+	}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	initMoonPhase();
 	initAudio();
 	initHeroDate();
-	initRottaSection();
+	initHeroTextAnimation();
+	initMareSection();    // deve stare prima di tutto il resto: applica
+	initMareMadreSection(); // i margin negativi prima che gli altri trigger
+	initRottaSection();   // calcolino le loro posizioni
 	initGalleryPolaroid();
-	initMareSection();
-	initMareMadreSection();
 	initMenuSection();
 	initEventiMarquee();
 	initFeoFriendsSwiper();
@@ -401,7 +435,7 @@ function initGalleryPolaroid() {
 						trigger: section,
 						start: triggerStart,
 						end: triggerEnd,
-						scrub: 3,
+						scrub: 1,
 					},
 				}
 			);
@@ -480,10 +514,12 @@ function initMareSection() {
 		});
 
 		// ── SEZIONE MARE-MADRE: pin + margin negativo ─────────────────────────
-		// La mare-madre viene pinned da GSAP mentre appare dietro al video.
-		// Il margin negativo la posiziona visivamente sopra (dietro) il video.
-		// Poiché sono entrambe DENTRO il wrapper, il pin spacer GSAP resta
-		// confinato nel wrapper e non sposta i trigger delle sezioni esterne.
+		// Durante il pin, GSAP inserisce il pin spacer (h=overlap) nella stessa
+		// posizione dove già sta la sezione (per il margin-top negativo).
+		// Il wrapper si contrae da H_section a 100vh → le sezioni successive
+		// saltano. Fix: minHeight sul wrapper = H_section, così non si contrae
+		// mai indipendentemente dallo stato del pin spacer.
+		const wrapper = section.parentElement;
 		const nextSection = section.nextElementSibling;
 		if (
 			nextSection &&
@@ -493,7 +529,11 @@ function initMareSection() {
 				Math.min(window.innerHeight, nextSection.offsetHeight);
 
 			const adjustMargin = () => {
-				nextSection.style.marginTop = -getOverlap() + 'px';
+				const overlap = getOverlap();
+				nextSection.style.marginTop = -overlap + 'px';
+				// minHeight (non height) lascia crescere il wrapper se il contenuto
+				// è più alto, ma impedisce la contrazione durante il pin.
+				wrapper.style.minHeight = nextSection.offsetHeight + 'px';
 			};
 			adjustMargin();
 			ScrollTrigger.addEventListener('refresh', adjustMargin);
