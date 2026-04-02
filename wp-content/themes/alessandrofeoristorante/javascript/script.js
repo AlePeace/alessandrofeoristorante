@@ -276,7 +276,7 @@ function initHeroDate() {
 // ─────────────────────────────────────────────
 
 function initHeroTextAnimation() {
-	const left  = document.querySelector('.hero-text-left');
+	const left = document.querySelector('.hero-text-left');
 	const right = document.querySelector('.hero-text-right');
 	if (!left && !right) return;
 
@@ -284,15 +284,27 @@ function initHeroTextAnimation() {
 	const DURATION = 25;
 
 	if (left) {
-		gsap.fromTo(left,
+		gsap.fromTo(
+			left,
 			{ xPercent: -30, rotation: -3 },
-			{ xPercent: 0,   rotation: -3, duration: DURATION, ease: 'power1.out' }
+			{
+				xPercent: 0,
+				rotation: -3,
+				duration: DURATION,
+				ease: 'power1.out',
+			}
 		);
 	}
 	if (right) {
-		gsap.fromTo(right,
+		gsap.fromTo(
+			right,
 			{ xPercent: 30, rotation: -6 },
-			{ xPercent: 0,  rotation: -6, duration: DURATION, ease: 'power1.out' }
+			{
+				xPercent: 0,
+				rotation: -6,
+				duration: DURATION,
+				ease: 'power1.out',
+			}
 		);
 	}
 }
@@ -302,9 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	initAudio();
 	initHeroDate();
 	initHeroTextAnimation();
-	initMareSection();    // deve stare prima di tutto il resto: applica
+	initMareSection(); // deve stare prima di tutto il resto: applica
 	initMareMadreSection(); // i margin negativi prima che gli altri trigger
-	initRottaSection();   // calcolino le loro posizioni
+	initRottaSection(); // calcolino le loro posizioni
 	initGalleryPolaroid();
 	initMenuSection();
 	initEventiMarquee();

@@ -570,7 +570,7 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<!-- HEADER ───────────────────────────────── -->
-		<div class="menu-header relative px-6 lg:px-14 pt-8 pb-6 lg:pt-18 lg:pb-10" style="border-bottom: 1px solid #23222D;">
+		<div class="menu-header relative lg:px-14 pt-8 pb-6 lg:pt-18 lg:pb-10" style="border-bottom: 1px solid #23222D;">
 
 			<!-- "i Menù" — MOBILE: in-flow sopra il titolo -->
 			<div class="lg:hidden relative flex items-center justify-center gap-2 pointer-events-none overflow-hidden" style="transform: rotate(-3deg);">
@@ -581,9 +581,9 @@ $text_right = $acf('hero_text_right')
 
 			</div>
 
-			<div class="w-fit mx-auto -mt-6 lg:mt-auto">
+			<div class="w-full lg:w-fit lg:mx-auto -mt-6 lg:mt-auto">
 			<!-- Titolo MARE MADRE — centrato, grande -->
-			<h2 class="font-icon-serif text-blue text-center text-9xl lg:text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.9] tracking-tight mb-5 lg:mb-7">
+			<h2 class="font-icon-serif text-blue text-center text-9xl lg:text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.9] tracking-tight mb-5 lg:mb-7 -translate-x-1.5">
 				MARE MADRE
 			</h2>
 			<!-- Riga sottotitolo: sinistra diario + destra coordinate -->
@@ -606,7 +606,7 @@ $text_right = $acf('hero_text_right')
 		?>
 
 		<!-- TAB 1: LE TRE ROTTE ─────────────────── -->
-		<a href="https://www.alessandrofeoristorante.it/il-menu/" target="_blank" class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/04/FEO_Menu_A4.pdf'); ?>" target="_blank" class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop: titolo e sottotitolo inline -->
@@ -643,7 +643,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 2: NAVIGAZIONE LIBERA ───────────── -->
-		<a href="https://www.alessandrofeoristorante.it/il-menu/" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/04/FEO_Menu_A4.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
