@@ -17,8 +17,12 @@ $audio_url = get_site_url() . '/wp-content/uploads/2026/03/Sea.mp3';
 // Full Menu — immagini per le card
 $full_menu_images = array(
 	get_site_url() . '/wp-content/uploads/2026/03/plate_oil.jpg',
-	get_site_url() . '/wp-content/uploads/2026/03/gallery-1-4-scaled.jpg',
-	get_site_url() . '/wp-content/uploads/2026/03/le_tre_rotte.jpg',
+	get_site_url() . '/wp-content/uploads/2026/04/005_FC--scaled.webp',
+	get_site_url() . '/wp-content/uploads/2026/04/089_FC--scaled.webp',
+	get_site_url() . '/wp-content/uploads/2026/04/063_FC-.jpg.webp',
+	get_site_url() . '/wp-content/uploads/2026/04/051_FC--scaled.webp',
+	get_site_url() . '/wp-content/uploads/2026/04/FC2_7678.webp',
+	get_site_url() . '/wp-content/uploads/2026/04/006_FC--scaled.webp',
 );
 
 // Full Menu — numerali romani
@@ -130,10 +134,11 @@ body.fm-is-open #masthead {
 }
 
 .fm-card-image img {
-	max-width: 68%;
+	max-width: 70%;
 	max-height: clamp(200px, 42svh, 420px);
-	width: auto;
-	height: auto;
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 2 / 3!important;
 	object-fit: cover;
 	display: block;
 }
@@ -223,7 +228,9 @@ body.fm-is-open #masthead {
 	}
 
 	.fm-card-image img {
-		max-height: clamp(200px, 36vh, 400px);
+		max-width: 60%;
+		//max-height: clamp(200px, 36vh, 400px);
+		//padding: 0 45px;
 	}
 
 	.fm-card-capitolo {
@@ -357,7 +364,7 @@ body.fm-is-open #masthead {
 
 		if ( ! empty( $full_menu_items ) ) :
 			foreach ( $full_menu_items as $idx => $item ) :
-				$img_url    = $full_menu_images[ $idx % 3 ];
+				$img_url    = $full_menu_images[ $idx % 7 ];
 				$numeral    = isset( $roman_numerals[ $idx ] ) ? $roman_numerals[ $idx ] : ( $idx + 1 );
 				$capitolo   = 'CAPITOLO ' . $numeral;
 				$desc       = ! empty( $item->description ) ? $item->description : '';

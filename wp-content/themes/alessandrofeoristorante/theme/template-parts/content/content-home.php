@@ -13,11 +13,17 @@ $acf = function_exists('get_field')
 	? Closure::fromCallable('get_field')
 	: static fn() => null;
 
-// ACF: video background (file field o URL field)
+// ACF: video background desktop (16:9 / landscape)
 $video_acf = $acf('hero_video_url');
 $video_url  = $video_acf
 	? esc_url(is_array($video_acf) ? $video_acf['url'] : $video_acf)
-	: esc_url(get_site_url() . '/wp-content/uploads/2026/03/0313_compressed.webm');
+	: esc_url(get_site_url() . '/wp-content/uploads/2026/04/MareMadre_Orizzontale_v2.webm');
+
+// ACF: video background mobile (9:16 / portrait)
+$video_mobile_acf = $acf('hero_video_mobile_url');
+$video_mobile_url  = $video_mobile_acf
+	? esc_url(is_array($video_mobile_acf) ? $video_mobile_acf['url'] : $video_mobile_acf)
+	: esc_url(get_site_url() . '/wp-content/uploads/2026/04/verticale.webm');
 
 	$video_madre_url  = $video_acf
 		? esc_url(is_array($video_acf) ? $video_acf['url'] : $video_acf)
@@ -52,11 +58,18 @@ $text_right = $acf('hero_text_right')
 
 	<section class="hero-section relative w-full h-svh overflow-hidden">
 
-		<!-- VIDEO BACKGROUND -->
+		<!-- VIDEO BACKGROUND desktop (nascosto su mobile) -->
 		<video
 			autoplay muted loop playsinline
-			class="absolute inset-0 w-full h-full object-cover z-0">
+			class="hidden lg:block absolute inset-0 w-full h-full object-cover z-0">
 			<source src="<?php echo $video_url; ?>" type="video/webm">
+		</video>
+
+		<!-- VIDEO BACKGROUND mobile 9:16 (nascosto su desktop) -->
+		<video
+			autoplay muted loop playsinline
+			class="block lg:hidden absolute inset-0 w-full h-full object-cover z-0">
+			<source src="<?php echo $video_mobile_url; ?>" type="video/webm">
 		</video>
 
 		<!-- SFUMATURA BLU -->
