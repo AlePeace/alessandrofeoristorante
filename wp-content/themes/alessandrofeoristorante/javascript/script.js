@@ -28,6 +28,8 @@ function initLenis() {
 		touchMultiplier: 1, // Moltiplicatore per touch
 		infinite: false, // Scroll infinito disabilitato
 		autoResize: true, // Auto resize
+		// Permette scroll nativo sul full menu overlay (mobile)
+		prevent: (node) => node.id === 'full-menu-overlay',
 		anchors: {
 			offset: 100, // Offset per compensare l'header fisso
 			onComplete: () => {
@@ -80,12 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	// Stop/start smooth scroll
+	// stopSmoothScroll disabilita anche normalizeScroll per permettere
+	// lo scroll nativo dell'overlay su mobile (incluso iOS)
 	window.stopSmoothScroll = () => {
 		lenis.stop();
+		ScrollTrigger.normalizeScroll(false);
 	};
 
 	window.startSmoothScroll = () => {
 		lenis.start();
+		if (appleOS) ScrollTrigger.normalizeScroll(true);
 	};
 });
 
@@ -314,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initAudio();
 	initHeroDate();
 	initHeroTextAnimation();
+	initFullMenu();
 	initMareSection(); // deve stare prima di tutto il resto: applica
 	initMareMadreSection(); // i margin negativi prima che gli altri trigger
 	initRottaSection(); // calcolino le loro posizioni
@@ -324,6 +331,221 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Ricalcola tutte le posizioni ScrollTrigger dopo il rendering iniziale.
 	ScrollTrigger.refresh();
 });
+
+// ─────────────────────────────────────────────
+// FULL MENU OVERLAY
+// L'header (z:9999) rimane sopra all'overlay (z:9998).
+// Il toggle cambia da segnalibro a X quando il menu è aperto.
+// Desktop: scroll orizzontale con rotella mouse (GSAP lerp)
+// Mobile: scroll verticale naturale nell'overlay
+// ─────────────────────────────────────────────
+
+function initFullMenu() {
+	const overlay = document.getElementById('full-menu-overlay');
+	const toggleBtn = document.getElementById('full-menu-toggle');
+	const cardsWrap = document.getElementById('fm-cards');
+	const iconOpen = document.getElementById('fm-icon-open');
+	const iconClose = document.getElementById('fm-icon-close');
+
+	if (!overlay || !toggleBtn || !cardsWrap) return;
+
+	let isOpen = false;
+	let targetX = 0;
+	let currentX = 0;
+	let maxScroll = 0;
+
+	const isDesktop = () => window.innerWidth >= 1024;
+
+	const computeMaxScroll = () =>
+		Math.max(0, cardsWrap.scrollWidth - cardsWrap.clientWidth);
+
+	// Toggle icona segnalibro ↔ X
+	// NOTA: usare 'block' non '' perché la regola CSS #fm-icon-close { display:none }
+	// verrebbe ripristinata con display:'', tenendo il bottone invisibile (0x0)
+	function setIconOpen() {
+		if (iconOpen) iconOpen.style.display = 'block';
+		if (iconClose) iconClose.style.display = 'none';
+		toggleBtn.setAttribute('aria-label', 'Apri menu');
+		toggleBtn.setAttribute('aria-expanded', 'false');
+	}
+	function setIconClose() {
+		if (iconOpen) iconOpen.style.display = 'none';
+		if (iconClose) iconClose.style.display = 'block';
+		toggleBtn.setAttribute('aria-label', 'Chiudi menu');
+		toggleBtn.setAttribute('aria-expanded', 'true');
+	}
+
+	// Smooth horizontal scroll su desktop via GSAP ticker
+	gsap.ticker.add(() => {
+		if (!isOpen || !isDesktop()) return;
+		currentX += (targetX - currentX) * 0.08;
+		gsap.set(cardsWrap, { x: -currentX });
+	});
+
+	// Rotella mouse → scroll orizzontale (desktop only)
+	const onWheel = (e) => {
+		if (!isDesktop()) return;
+		e.preventDefault();
+		targetX = Math.max(0, Math.min(maxScroll, targetX + e.deltaY));
+	};
+
+	function openMenu() {
+		if (isOpen) return;
+		isOpen = true;
+
+		setIconClose();
+		overlay.classList.add('is-open');
+		overlay.setAttribute('aria-hidden', 'false');
+		document.body.classList.add('fm-is-open'); // disabilita mix-blend-difference
+		document.body.style.overflow = 'hidden';
+
+		if (window.stopSmoothScroll) window.stopSmoothScroll();
+
+		// Reset posizione
+		targetX = 0;
+		currentX = 0;
+		gsap.set(cardsWrap, { x: 0 });
+		overlay.scrollTop = 0;
+
+		// Calcola maxScroll dopo che l'overlay è visibile nel DOM
+		requestAnimationFrame(() => {
+			maxScroll = computeMaxScroll();
+		});
+
+		const cardEls = overlay.querySelectorAll('.fm-card');
+
+		// Kill animazioni precedenti e pulisci solo opacity
+		// NON toccare transform: la rotazione CSS (.fm-card:nth-child) deve restare
+		gsap.killTweensOf([overlay, cardEls]);
+		gsap.set(cardEls, { clearProps: 'opacity' });
+
+		// APERTURA: overlay slide dal basso (clipPath) + fade-in staggerato delle card
+		gsap.fromTo(
+			overlay,
+			{ opacity: 0, clipPath: 'inset(100% 0 0 0)' },
+			{
+				opacity: 1,
+				clipPath: 'inset(0% 0 0 0)',
+				duration: 0.65,
+				ease: 'power3.inOut',
+			}
+		);
+
+		// Solo opacity per non sovrascrivere la rotazione CSS delle card
+		gsap.fromTo(
+			cardEls,
+			{ opacity: 0 },
+			{
+				opacity: 1,
+				duration: 0.55,
+				stagger: 0.08,
+				ease: 'power3.out',
+				delay: 0.25,
+			}
+		);
+
+		overlay.addEventListener('wheel', onWheel, { passive: false });
+	}
+
+	// onDone: callback opzionale eseguito al termine dell'animazione di chiusura
+	function closeMenu(onDone) {
+		if (!isOpen) return;
+
+		overlay.removeEventListener('wheel', onWheel);
+
+		const cardEls = overlay.querySelectorAll('.fm-card');
+
+		gsap.killTweensOf([overlay, cardEls]);
+
+		// Solo opacity: non toccare transform (rotazione CSS)
+		gsap.to(cardEls, {
+			opacity: 0,
+			duration: 0.25,
+			stagger: 0.04,
+			ease: 'power2.in',
+		});
+
+		gsap.to(overlay, {
+			opacity: 0,
+			clipPath: 'inset(0% 0 100% 0)',
+			duration: 0.55,
+			delay: 0.12,
+			ease: 'power3.inOut',
+			onComplete: () => {
+				isOpen = false;
+				setIconOpen();
+				overlay.classList.remove('is-open');
+				overlay.setAttribute('aria-hidden', 'true');
+				document.body.classList.remove('fm-is-open'); // ripristina mix-blend-difference
+				document.body.style.overflow = '';
+				// Reset per la prossima apertura
+				gsap.set(overlay, { clearProps: 'clipPath,opacity' });
+				gsap.set(cardEls, { clearProps: 'opacity' });
+				if (window.startSmoothScroll) window.startSmoothScroll();
+				toggleBtn.focus();
+				if (typeof onDone === 'function') onDone();
+			},
+		});
+	}
+
+	// ── Card click: chiudi il menu, poi scrolla o naviga ──────────────
+	overlay.querySelectorAll('.fm-card').forEach((card) => {
+		card.addEventListener('click', (e) => {
+			e.preventDefault();
+			const href = card.getAttribute('href') || '';
+
+			closeMenu(() => {
+				if (!href || href === '#') return;
+
+				// Prova a costruire l'URL assoluta per confrontarla
+				let targetHash = '';
+				let isSamePage = false;
+				try {
+					const url = new URL(href, window.location.href);
+					targetHash = url.hash; // es: "#chi-siamo"
+					isSamePage =
+						url.hostname === window.location.hostname &&
+						url.pathname === window.location.pathname;
+				} catch {
+					// href non parsabile — naviga direttamente
+					window.location.href = href;
+					return;
+				}
+
+				if (targetHash && isSamePage) {
+					// Scroll to ID sulla stessa pagina
+					const target = document.querySelector(targetHash);
+					if (target) {
+						if (window.scrollToElement) {
+							window.scrollToElement(target, -120);
+						} else {
+							target.scrollIntoView({ behavior: 'smooth' });
+						}
+					}
+				} else {
+					// Navigazione a pagina diversa (o link puro senza hash)
+					window.location.href = href;
+				}
+			});
+		});
+	});
+
+	// Toggle click: apri o chiudi
+	toggleBtn.addEventListener('click', () => {
+		if (isOpen) closeMenu();
+		else openMenu();
+	});
+
+	// Chiudi con ESC
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && isOpen) closeMenu();
+	});
+
+	// Ricalcola maxScroll al resize
+	window.addEventListener('resize', () => {
+		if (isOpen) maxScroll = computeMaxScroll();
+	});
+}
 
 // ─────────────────────────────────────────────
 // FEO & FRIENDS SWIPER — cards effect

@@ -12,23 +12,249 @@ $logo_image_url = get_site_url() . '/wp-content/uploads/2026/03/FEO_logo-1.png';
 $logo_id        = attachment_url_to_postid( $logo_image_url );
 
 // Audio del mare – aggiorna con l'URL del tuo file audio caricato in WordPress
-// Esempio: get_site_url() . '/wp-content/uploads/2026/03/suono-mare.mp3'
 $audio_url = get_site_url() . '/wp-content/uploads/2026/03/Sea.mp3';
+
+// Full Menu — immagini per le card
+$full_menu_images = array(
+	get_site_url() . '/wp-content/uploads/2026/03/plate_oil.jpg',
+	get_site_url() . '/wp-content/uploads/2026/03/gallery-1-4-scaled.jpg',
+	get_site_url() . '/wp-content/uploads/2026/03/le_tre_rotte.jpg',
+);
+
+// Full Menu — numerali romani
+$roman_numerals = array( 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X' );
+
+// Full Menu — voci di menu (stessa location del footer)
+$menu_locations   = get_nav_menu_locations();
+$full_menu_obj_id = isset( $menu_locations['menu-2'] ) ? $menu_locations['menu-2'] : 0;
+$full_menu_items  = $full_menu_obj_id ? wp_get_nav_menu_items( $full_menu_obj_id ) : array();
 ?>
+
+<style>
+/* ═══════════════════════════════════════════
+   FULL MENU OVERLAY
+   z-index: 9998 — l'header (z:9999) rimane sopra
+   Il bottone toggle diventa X quando il menu è aperto
+═══════════════════════════════════════════ */
+
+/* — Icona X nel toggle button (nascosta di default) — */
+#fm-icon-close { display: none; }
+
+/* — Quando il full menu è aperto: disabilita mix-blend-difference
+     sull'header così il bottone X rimane visibile sul fondo scuro — */
+body.fm-is-open #masthead {
+	mix-blend-mode: normal;
+}
+
+/* — Overlay — */
+#full-menu-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 9998;
+	background: #23222D;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+	/* mobile: scroll verticale */
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+#full-menu-overlay.is-open {
+	pointer-events: all;
+	visibility: visible;
+}
+
+/* — Spacer per non finire sotto l'header — */
+.fm-header-space {
+	flex-shrink: 0;
+	height: 135px; /* header py-6 (24px*2) + logo 87px */
+}
+
+/* — Cards wrapper — */
+#fm-cards {
+	display: flex;
+	flex-direction: column; /* mobile: verticale */
+	gap: 0.75rem;
+	padding: 0.5rem 1rem 2rem;
+	flex: 1;
+}
+
+/* — Singola card — */
+.fm-card {
+	flex: 0 0 auto;
+	width: 100%;
+	min-height: 88svh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 3rem 2rem 2.5rem;
+	background: #ffffff;
+	border-radius: 3px;
+	text-decoration: none;
+	cursor: pointer;
+	overflow: hidden;
+}
+
+/* — Contenuto card — */
+.fm-card-title {
+	font-family: 'icon-serif', serif;
+	font-size: clamp(2.4rem, 9vw, 4.5rem);
+	color: #23222D;
+	text-transform: uppercase;
+	line-height: 1;
+	margin: 0 0 0.9rem;
+	letter-spacing: 0.01em;
+}
+
+.fm-card-desc {
+	font-family: 'script', cursive;
+	font-size: clamp(1rem, 3.5vw, 1.35rem);
+	color: #23222D;
+	line-height: 1.45;
+	margin: 0 0 0;
+	max-width: 32ch;
+}
+
+.fm-card-image {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.75rem 0;
+	width: 100%;
+}
+
+.fm-card-image img {
+	max-width: 68%;
+	max-height: clamp(200px, 42svh, 420px);
+	width: auto;
+	height: auto;
+	object-fit: cover;
+	display: block;
+}
+
+.fm-card-capitolo {
+	font-family: 'icon-serif', serif;
+	font-size: clamp(1.5rem, 5vw, 2.5rem);
+	color: #23222D;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	line-height: 1;
+	margin: 0 0 0.85rem;
+}
+
+.fm-card-coords {
+	font-family: 'typewriter', monospace;
+	font-size: 0.65rem;
+	letter-spacing: 0.1em;
+	color: #23222D;
+	opacity: 0.65;
+	margin: 0;
+}
+
+/* ─── DESKTOP ──────────────────────────── */
+@media (min-width: 1024px) {
+	.fm-header-space {
+		height: 135px;
+	}
+
+	#full-menu-overlay {
+		overflow: hidden; /* JS gestisce lo scroll orizzontale */
+	}
+
+	#fm-cards {
+		flex-direction: row; /* orizzontale */
+		gap: 1.25rem;
+		padding: 1.75rem 2rem 2rem;
+		flex: 1;
+		min-height: 0;
+		will-change: transform;
+		align-items: stretch;
+		/* overflow visible: la rotazione CSS delle card non viene clippata
+		   dall'#fm-cards, ma dall'overlay che ha overflow:hidden */
+		overflow: visible;
+	}
+
+	.fm-card {
+		flex: 0 0 30vw;
+		width: 30vw;
+		min-height: 0;
+		height: 100%;
+		padding: 3rem 2.5rem 2.5rem;
+		border-radius: 4px;
+		/* Transizione per hover (rotazione + colore immagine) */
+		transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Rotazioni alternate in stato normale */
+	.fm-card:nth-child(odd) {
+		transform: rotate(-1.5deg);
+	}
+	.fm-card:nth-child(even) {
+		transform: rotate(1deg);
+	}
+
+	/* Hover: card si raddrizza + immagine a colori */
+	.fm-card:hover {
+		transform: rotate(0deg);
+	}
+
+	/* Immagini in B&W di default, a colori su hover */
+	.fm-card .fm-card-image img {
+		filter: grayscale(100%);
+		transition: filter 0.5s ease;
+	}
+	.fm-card:hover .fm-card-image img {
+		filter: grayscale(0%);
+	}
+
+	.fm-card-title {
+		font-size: clamp(2rem, 3.2vw, 4rem);
+		margin-bottom: 0.75rem;
+	}
+
+	.fm-card-desc {
+		font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+	}
+
+	.fm-card-image img {
+		max-height: clamp(200px, 36vh, 400px);
+	}
+
+	.fm-card-capitolo {
+		font-size: clamp(1.3rem, 2vw, 2rem);
+	}
+}
+</style>
 
 <header id="masthead" class="fixed w-full top-0 left-0 right-0 z-9999 mix-blend-difference">
 
 	<div class="relative w-full flex items-center justify-between px-5 lg:px-20 py-6">
 
-		<!-- SINISTRA: bottone full menu (flusso normale) -->
+		<!-- SINISTRA: bottone full menu — diventa X quando il menu è aperto -->
 		<button
 			id="full-menu-toggle"
 			class="flex items-center justify-center opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
 			aria-label="<?php esc_attr_e( 'Apri menu', 'alessandrofeoristorante' ); ?>"
+			aria-expanded="false"
 		>
-			<svg width="22" height="27" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-				<path d="M0 30V3.33333C0 2.41667 0.326666 1.63222 0.98 0.98C1.63333 0.327778 2.41778 0.00111111 3.33333 0H20C20.9167 0 21.7017 0.326667 22.355 0.98C23.0083 1.63333 23.3344 2.41778 23.3333 3.33333V30L11.6667 25L0 30ZM3.33333 24.9167L11.6667 21.3333L20 24.9167V3.33333H3.33333V24.9167Z" fill="white"/>
-			</svg>
+			<!-- Icona: segnalibro (menu chiuso) -->
+			<span id="fm-icon-open" aria-hidden="true">
+				<svg width="22" height="27" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M0 30V3.33333C0 2.41667 0.326666 1.63222 0.98 0.98C1.63333 0.327778 2.41778 0.00111111 3.33333 0H20C20.9167 0 21.7017 0.326667 22.355 0.98C23.0083 1.63333 23.3344 2.41778 23.3333 3.33333V30L11.6667 25L0 30ZM3.33333 24.9167L11.6667 21.3333L20 24.9167V3.33333H3.33333V24.9167Z" fill="white"/>
+				</svg>
+			</span>
+			<!-- Icona: X (menu aperto) -->
+			<span id="fm-icon-close" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M20 2L2 20M2 2L20 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+				</svg>
+			</span>
 		</button>
 
 		<!-- CENTRO: logo FEO — assoluto al 50% esatto della pagina -->
@@ -108,3 +334,88 @@ $audio_url = get_site_url() . '/wp-content/uploads/2026/03/Sea.mp3';
 	<?php endif; ?>
 
 </header><!-- #masthead -->
+
+<!-- ═══════════════════════════════════════════
+     FULL MENU OVERLAY  (z:9998 — header z:9999 rimane sopra)
+     Toggle apre/chiude — bottone diventa X
+═══════════════════════════════════════════ -->
+<div
+	id="full-menu-overlay"
+	aria-hidden="true"
+	role="dialog"
+	aria-modal="true"
+	aria-label="<?php esc_attr_e( 'Menu di navigazione', 'alessandrofeoristorante' ); ?>"
+>
+
+	<!-- Spazio per non finire nascosto sotto l'header fisso -->
+	<div class="fm-header-space" aria-hidden="true"></div>
+
+	<!-- Cards — una per ogni voce di menu -->
+	<div id="fm-cards">
+		<?php
+		$fm_coords = '40&#176;10&#8242;31&#8243;N 15&#176;07&#8242;01&#8243;E';
+
+		if ( ! empty( $full_menu_items ) ) :
+			foreach ( $full_menu_items as $idx => $item ) :
+				$img_url    = $full_menu_images[ $idx % 3 ];
+				$numeral    = isset( $roman_numerals[ $idx ] ) ? $roman_numerals[ $idx ] : ( $idx + 1 );
+				$capitolo   = 'CAPITOLO ' . $numeral;
+				$desc       = ! empty( $item->description ) ? $item->description : '';
+				?>
+				<a
+					href="<?php echo esc_url( $item->url ); ?>"
+					class="fm-card"
+					aria-label="<?php echo esc_attr( $item->title ); ?>"
+				>
+					<h2 class="fm-card-title"><?php echo esc_html( $item->title ); ?></h2>
+					<?php if ( $desc ) : ?>
+					<p class="fm-card-desc"><?php echo esc_html( $desc ); ?></p>
+					<?php endif; ?>
+					<div class="fm-card-image">
+						<img
+							src="<?php echo esc_url( $img_url ); ?>"
+							alt="<?php echo esc_attr( $item->title ); ?>"
+							loading="lazy"
+						>
+					</div>
+					<p class="fm-card-capitolo"><?php echo esc_html( $capitolo ); ?></p>
+					<p class="fm-card-coords"><?php echo $fm_coords; ?></p>
+				</a>
+				<?php
+			endforeach;
+		else :
+			// Fallback se il menu non è ancora configurato in WP
+			$fallback = array(
+				array( 'title' => 'La Mia Rotta', 'url' => home_url( '/' ),         'desc' => 'Seguo il mare e lascio parlare la materia prima' ),
+				array( 'title' => 'Lo Chef',       'url' => home_url( '/chef/' ),    'desc' => "Nella mia cucina s\u2019incontrano terra, mare e rispetto dei prodotti" ),
+				array( 'title' => 'Madre Mare',    'url' => home_url( '/menu/' ),    'desc' => 'I doni del mare e la mia responsabilit&agrave; di portarli a terra' ),
+			);
+			foreach ( $fallback as $idx => $item ) :
+				$img_url  = $full_menu_images[ $idx % 3 ];
+				$numeral  = $roman_numerals[ $idx ];
+				$capitolo = 'CAPITOLO ' . $numeral;
+				?>
+				<a
+					href="<?php echo esc_url( $item['url'] ); ?>"
+					class="fm-card"
+					aria-label="<?php echo esc_attr( $item['title'] ); ?>"
+				>
+					<h2 class="fm-card-title"><?php echo esc_html( $item['title'] ); ?></h2>
+					<p class="fm-card-desc"><?php echo $item['desc']; ?></p>
+					<div class="fm-card-image">
+						<img
+							src="<?php echo esc_url( $img_url ); ?>"
+							alt="<?php echo esc_attr( $item['title'] ); ?>"
+							loading="lazy"
+						>
+					</div>
+					<p class="fm-card-capitolo"><?php echo esc_html( $capitolo ); ?></p>
+					<p class="fm-card-coords"><?php echo $fm_coords; ?></p>
+				</a>
+				<?php
+			endforeach;
+		endif;
+		?>
+	</div>
+
+</div><!-- #full-menu-overlay -->
