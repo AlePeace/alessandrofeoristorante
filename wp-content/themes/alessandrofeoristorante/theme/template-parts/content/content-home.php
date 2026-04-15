@@ -120,7 +120,7 @@ $text_right = $acf('hero_text_right')
 
 	 <div class="ipsilon-hero-wrapper absolute bottom-[8%] lg:bottom-[12%] left-1/2 -translate-x-1/2 rotate-90 z-20 pointer-events-none">
       <span
-        class="ipsilon-hero font-doodles text-white text-9xl scale-180 block leading-none animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
+        class="ipsilon-hero font-doodles text-white text-9xl scale-180 block leading-none -translate-y-3 lg:-translate-y-5 animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
         aria-hidden="true">y</span>
     </div>
 

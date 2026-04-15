@@ -29,7 +29,7 @@ body {
 }
 /* freccia hero leggermente più a sinistra su Apple */
 .is-apple-os .ipsilon-hero-wrapper {
-	--tw-translate-x: -70%;
+	--tw-translate-x: -60%;
 }
 /* i-menu-arrow su Apple desktop scende leggermente */
 @media (min-width: 1024px) {
