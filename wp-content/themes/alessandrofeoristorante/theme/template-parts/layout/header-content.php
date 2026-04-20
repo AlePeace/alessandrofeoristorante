@@ -162,19 +162,62 @@ body.fm-is-open #masthead {
 	margin: 0;
 }
 
+/* ─── FRECCE NAV — solo desktop ───────── */
+.fm-arrow {
+	display: none;
+}
+
+@media (min-width: 1024px) {
+	.fm-arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		background: rgba(255,255,255,0.10);
+		border: 1px solid rgba(255,255,255,0.25);
+		border-radius: 50%;
+		cursor: pointer;
+		transition: background 0.25s ease, opacity 0.3s ease, transform 0.25s ease;
+		opacity: 1;
+		flex-shrink: 0;
+	}
+
+	.fm-arrow:hover {
+		background: rgba(255,255,255,0.22);
+		transform: scale(1.08);
+	}
+
+	.fm-arrow.is-hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.fm-arrow svg {
+		width: 16px;
+		height: 16px;
+	}
+}
+
 /* ─── SCROLL HINT — solo desktop ──────── */
+#fm-nav-row,
 #fm-scroll-hint {
 	display: none;
 }
 
 @media (min-width: 1024px) {
+	#fm-nav-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 2rem 0.75rem;
+		flex-shrink: 0;
+	}
+
 	#fm-scroll-hint {
 		display: flex;
 		align-items: center;
-		justify-content: center;
 		gap: 0.8rem;
-		padding: 0 2rem 0.75rem;
-		flex-shrink: 0;
 		opacity: 1;
 		transition: opacity 0.5s ease;
 		pointer-events: none;
@@ -398,10 +441,22 @@ body.fm-is-open #masthead {
 	<!-- Spazio per non finire nascosto sotto l'header fisso -->
 	<div class="fm-header-space" aria-hidden="true"></div>
 
-	<!-- Scroll hint — desktop only, scompare al primo scroll -->
-	<div id="fm-scroll-hint" aria-hidden="true">
-		<span class="fm-scroll-hint-dot"></span>
-		<span class="fm-scroll-hint-text">Scroll</span>
+	<!-- Riga hint + frecce — desktop only -->
+	<div id="fm-nav-row">
+		<button id="fm-arrow-prev" class="fm-arrow is-hidden" aria-label="Scorri sinistra">
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d="M15 19L8 12L15 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
+		<div id="fm-scroll-hint" aria-hidden="true">
+			<span class="fm-scroll-hint-dot"></span>
+			<span class="fm-scroll-hint-text">Scroll</span>
+		</div>
+		<button id="fm-arrow-next" class="fm-arrow" aria-label="Scorri destra">
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d="M9 5L16 12L9 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
 	</div>
 
 	<!-- Cards — una per ogni voce di menu -->

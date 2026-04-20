@@ -347,6 +347,8 @@ function initFullMenu() {
 	const iconOpen = document.getElementById('fm-icon-open');
 	const iconClose = document.getElementById('fm-icon-close');
 	const scrollHint = document.getElementById('fm-scroll-hint');
+	const arrowPrev = document.getElementById('fm-arrow-prev');
+	const arrowNext = document.getElementById('fm-arrow-next');
 
 	if (!overlay || !toggleBtn || !cardsWrap) return;
 
@@ -355,6 +357,14 @@ function initFullMenu() {
 	let currentX = 0;
 	let maxScroll = 0;
 	let hintHidden = false;
+
+	const ARROW_STEP = window.innerWidth * 0.32; // ~una card
+
+	function updateArrows() {
+		if (!isDesktop()) return;
+		arrowPrev?.classList.toggle('is-hidden', targetX <= 0);
+		arrowNext?.classList.toggle('is-hidden', targetX >= maxScroll);
+	}
 
 	const isDesktop = () => window.innerWidth >= 1024;
 
@@ -385,14 +395,31 @@ function initFullMenu() {
 	});
 
 	// Rotella mouse → scroll orizzontale (desktop only)
+	const hideHint = () => {
+		if (!hintHidden && scrollHint) {
+			hintHidden = true;
+			scrollHint.classList.add('is-hidden');
+		}
+	};
+
 	const onWheel = (e) => {
 		if (!isDesktop()) return;
 		e.preventDefault();
 		targetX = Math.max(0, Math.min(maxScroll, targetX + e.deltaY));
-		if (!hintHidden && scrollHint && targetX > 20) {
-			hintHidden = true;
-			scrollHint.classList.add('is-hidden');
-		}
+		if (targetX > 20) hideHint();
+		updateArrows();
+	};
+
+	const onArrowPrev = () => {
+		targetX = Math.max(0, targetX - ARROW_STEP);
+		hideHint();
+		updateArrows();
+	};
+
+	const onArrowNext = () => {
+		targetX = Math.min(maxScroll, targetX + ARROW_STEP);
+		hideHint();
+		updateArrows();
 	};
 
 	function openMenu() {
@@ -407,13 +434,15 @@ function initFullMenu() {
 
 		if (window.stopSmoothScroll) window.stopSmoothScroll();
 
-		// Reset posizione e scroll hint
+		// Reset posizione, scroll hint e frecce
 		targetX = 0;
 		currentX = 0;
 		hintHidden = false;
 		gsap.set(cardsWrap, { x: 0 });
 		overlay.scrollTop = 0;
 		if (scrollHint) scrollHint.classList.remove('is-hidden');
+		arrowPrev?.classList.add('is-hidden');
+		arrowNext?.classList.remove('is-hidden');
 
 		// Calcola maxScroll dopo che l'overlay è visibile nel DOM
 		requestAnimationFrame(() => {
@@ -453,6 +482,10 @@ function initFullMenu() {
 		);
 
 		overlay.addEventListener('wheel', onWheel, { passive: false });
+		arrowPrev?.addEventListener('click', onArrowPrev);
+		arrowNext?.addEventListener('click', onArrowNext);
+		// Aggiorna maxScroll e frecce dopo apertura
+		requestAnimationFrame(() => updateArrows());
 	}
 
 	// onDone: callback opzionale eseguito al termine dell'animazione di chiusura
@@ -460,6 +493,8 @@ function initFullMenu() {
 		if (!isOpen) return;
 
 		overlay.removeEventListener('wheel', onWheel);
+		arrowPrev?.removeEventListener('click', onArrowPrev);
+		arrowNext?.removeEventListener('click', onArrowNext);
 
 		const cardEls = overlay.querySelectorAll('.fm-card');
 
