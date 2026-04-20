@@ -10,16 +10,16 @@ body {
 	@apply text-foreground bg-white font-sans;
 }
 ::-webkit-scrollbar {
-  @apply lg:w-1;
+	@apply lg:w-1;
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply lg:bg-white;
+	@apply lg:bg-white;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply lg:bg-blue lg:rounded-full lg:transition-all lg:duration-300 lg:ease-in-out;
+	@apply lg:bg-blue lg:rounded-full lg:transition-all lg:duration-300 lg:ease-in-out;
 }
 /* ─── APPLE OS: fix altezza sezione video con address bar dinamica ─── */
 /* 100dvh si aggiorna quando l'address bar di Safari appare/scompare,
@@ -70,16 +70,17 @@ body {
 	position: relative;
 }
 
-.riserva-section .wpcf7-form-control:not([type="submit"]):not([type="checkbox"]) {
+.riserva-section
+	.wpcf7-form-control:not([type="submit"]):not([type="checkbox"]) {
 	width: 100%;
 	background: transparent;
 	border: none;
-	border-bottom: 1px solid #23222D;
+	border-bottom: 1px solid #23222d;
 	border-radius: 0;
 	padding: 0.5rem 0;
 	font-family: var(--font-typewriter);
 	font-size: clamp(0.72rem, 0.95vw, 0.85rem);
-	color: #23222D;
+	color: #23222d;
 	outline: none;
 	appearance: none;
 	-webkit-appearance: none;
@@ -87,13 +88,13 @@ body {
 }
 
 .riserva-section .wpcf7-form-control::placeholder {
-	color: #23222D;
+	color: #23222d;
 	opacity: 0.6;
 }
 
 .riserva-section .wpcf7-form-control:focus {
 	outline: none;
-	border-bottom-color: #23222D;
+	border-bottom-color: #23222d;
 }
 
 .riserva-section .wpcf7-textarea {
@@ -113,8 +114,8 @@ body {
 	padding-top: 1.5rem;
 	margin-bottom: 1.5rem;
 }
-.riserva-section .riserva-acceptance p{
-	@apply flex gap-10 text-sm items-center;
+.riserva-section .riserva-acceptance p {
+	@apply flex items-center gap-10 text-sm;
 }
 /* Checkbox */
 .riserva-section .wpcf7-acceptance {
@@ -123,7 +124,7 @@ body {
 	gap: 0.65rem;
 	font-family: var(--font-typewriter);
 	font-size: clamp(0.6rem, 0.82vw, 0.72rem);
-	color: #23222D;
+	color: #23222d;
 	line-height: 1.7;
 	cursor: pointer;
 }
@@ -137,7 +138,7 @@ body {
 	width: 13px;
 	height: 13px;
 	margin-top: 3px;
-	border: 1px solid #23222D;
+	border: 1px solid #23222d;
 	background: transparent;
 	appearance: none;
 	-webkit-appearance: none;
@@ -146,7 +147,7 @@ body {
 }
 
 .riserva-section .wpcf7-acceptance input[type="checkbox"]:checked {
-	background-color: #23222D;
+	background-color: #23222d;
 }
 
 /* Submit button */
@@ -157,16 +158,18 @@ body {
 	font-size: clamp(0.6rem, 0.9vw, 0.75rem);
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	color: #23222D;
+	color: #23222d;
 	background: transparent;
-	border: 1px solid #23222D;
+	border: 1px solid #23222d;
 	border-radius: 9999px;
 	padding: 0.9rem 2.5rem;
 	cursor: pointer;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 
 .riserva-section .wpcf7-submit:hover {
-	background-color: #23222D;
+	background-color: #23222d;
 	color: #fff;
 }

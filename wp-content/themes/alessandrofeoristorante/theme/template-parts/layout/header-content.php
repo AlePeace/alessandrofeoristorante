@@ -162,6 +162,47 @@ body.fm-is-open #masthead {
 	margin: 0;
 }
 
+/* ─── SCROLL HINT — solo desktop ──────── */
+#fm-scroll-hint {
+	display: none;
+}
+
+@media (min-width: 1024px) {
+	#fm-scroll-hint {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.8rem;
+		padding: 0 2rem 0.75rem;
+		flex-shrink: 0;
+		opacity: 1;
+		transition: opacity 0.5s ease;
+		pointer-events: none;
+		user-select: none;
+	}
+
+	#fm-scroll-hint.is-hidden {
+		opacity: 0;
+	}
+
+	.fm-scroll-hint-dot {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #ffffff;
+		flex-shrink: 0;
+	}
+
+	.fm-scroll-hint-text {
+		font-family: 'typewriter', monospace;
+		font-size: 1rem;
+		letter-spacing: 0.32em;
+		text-transform: uppercase;
+		color: #ffffff;
+		opacity: 0.75;
+	}
+}
+
 /* ─── DESKTOP ──────────────────────────── */
 @media (min-width: 1024px) {
 	.fm-header-space {
@@ -356,6 +397,12 @@ body.fm-is-open #masthead {
 
 	<!-- Spazio per non finire nascosto sotto l'header fisso -->
 	<div class="fm-header-space" aria-hidden="true"></div>
+
+	<!-- Scroll hint — desktop only, scompare al primo scroll -->
+	<div id="fm-scroll-hint" aria-hidden="true">
+		<span class="fm-scroll-hint-dot"></span>
+		<span class="fm-scroll-hint-text">Scroll</span>
+	</div>
 
 	<!-- Cards — una per ogni voce di menu -->
 	<div id="fm-cards">

@@ -346,6 +346,7 @@ function initFullMenu() {
 	const cardsWrap = document.getElementById('fm-cards');
 	const iconOpen = document.getElementById('fm-icon-open');
 	const iconClose = document.getElementById('fm-icon-close');
+	const scrollHint = document.getElementById('fm-scroll-hint');
 
 	if (!overlay || !toggleBtn || !cardsWrap) return;
 
@@ -353,6 +354,7 @@ function initFullMenu() {
 	let targetX = 0;
 	let currentX = 0;
 	let maxScroll = 0;
+	let hintHidden = false;
 
 	const isDesktop = () => window.innerWidth >= 1024;
 
@@ -387,6 +389,10 @@ function initFullMenu() {
 		if (!isDesktop()) return;
 		e.preventDefault();
 		targetX = Math.max(0, Math.min(maxScroll, targetX + e.deltaY));
+		if (!hintHidden && scrollHint && targetX > 20) {
+			hintHidden = true;
+			scrollHint.classList.add('is-hidden');
+		}
 	};
 
 	function openMenu() {
@@ -401,11 +407,13 @@ function initFullMenu() {
 
 		if (window.stopSmoothScroll) window.stopSmoothScroll();
 
-		// Reset posizione
+		// Reset posizione e scroll hint
 		targetX = 0;
 		currentX = 0;
+		hintHidden = false;
 		gsap.set(cardsWrap, { x: 0 });
 		overlay.scrollTop = 0;
+		if (scrollHint) scrollHint.classList.remove('is-hidden');
 
 		// Calcola maxScroll dopo che l'overlay è visibile nel DOM
 		requestAnimationFrame(() => {
