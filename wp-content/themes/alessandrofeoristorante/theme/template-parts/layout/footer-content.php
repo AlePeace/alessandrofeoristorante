@@ -139,7 +139,7 @@ $logo_id        = attachment_url_to_postid( $logo_image_url );
 			<span class="hidden sm:inline text-white/30">|</span>
 			<a href="/cookie-policy" class="hover:text-gold transition-colors">Cookie policy</a>
 			<span class="hidden sm:inline text-white/30">|</span>
-			<a href="https://qcore.it" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition-colors">Fatto QCore</a>
+			<a href="https://qcore.it" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition-colors">by QCore Agency</a>
 		</div>
 
 	</div>
