@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.35');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.42');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -477,23 +477,23 @@ function get_video_id_from_url($video_url)
 }
 
 
-add_action( 'wpcf7_init', function() {
-    wpcf7_add_form_tag( [ 'time', 'time*' ], function( $tag ) {
-        $tag = new WPCF7_FormTag( $tag );
-        $atts = array(
-            'type'  => 'time',
-            'name'  => $tag->name,
-            'class' => $tag->get_class_option( 'wpcf7-time' ),
-        );
-        if ( $tag->is_required() ) {
-            $atts['required'] = '';
-            $atts['aria-required'] = 'true';
-        }
-        $html = sprintf(
-            '<span class="wpcf7-form-control-wrap" data-name="%1$s"><input %2$s /></span>',
-            esc_attr( $tag->name ),
-            wpcf7_format_atts( $atts )
-        );
-        return $html;
-    }, [ 'name-attr' => true ] );
-} );
+add_action('wpcf7_init', function () {
+	wpcf7_add_form_tag(['time', 'time*'], function ($tag) {
+		$tag = new WPCF7_FormTag($tag);
+		$atts = array(
+			'type'  => 'time',
+			'name'  => $tag->name,
+			'class' => $tag->get_class_option('wpcf7-time'),
+		);
+		if ($tag->is_required()) {
+			$atts['required'] = '';
+			$atts['aria-required'] = 'true';
+		}
+		$html = sprintf(
+			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><input %2$s /></span>',
+			esc_attr($tag->name),
+			wpcf7_format_atts($atts)
+		);
+		return $html;
+	}, ['name-attr' => true]);
+});

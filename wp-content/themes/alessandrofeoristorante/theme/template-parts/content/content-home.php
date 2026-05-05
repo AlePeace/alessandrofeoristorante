@@ -25,9 +25,9 @@ $video_mobile_url  = $video_mobile_acf
 	? esc_url(is_array($video_mobile_acf) ? $video_mobile_acf['url'] : $video_mobile_acf)
 	: esc_url(get_site_url() . '/wp-content/uploads/2026/04/verticale.webm');
 
-	$video_madre_url  = $video_acf
-		? esc_url(is_array($video_acf) ? $video_acf['url'] : $video_acf)
-		: esc_url(get_site_url() . '/wp-content/uploads/2026/03/video_mare_madre.webm');
+$video_madre_url  = $video_acf
+	? esc_url(is_array($video_acf) ? $video_acf['url'] : $video_acf)
+	: esc_url(get_site_url() . '/wp-content/uploads/2026/03/video_mare_madre.webm');
 
 // Immagine background sezione L'Orto
 $orto_img_acf = $acf('orto_bg_image');
@@ -77,31 +77,31 @@ $text_right = $acf('hero_text_right')
 
 		<!-- BLOCCO CENTRALE: coordinate + titolo + data -->
 		<div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-		<div class="text-center w-[90%]">
+			<div class="text-center w-[90%]">
 
-			<!-- Coordinate geografiche — font typewriter -->
-			<div class="pb-10">
-				<span class="font-typewriter text-white text-[clamp(0.55rem,1.1vw,0.8rem)] tracking-[0.25em]">
-					(&nbsp;&nbsp;<?php echo esc_html($coordinates); ?>&nbsp;&nbsp;)
-				</span>
+				<!-- Coordinate geografiche — font typewriter -->
+				<div class="pb-10">
+					<span class="font-typewriter text-white text-[clamp(0.55rem,1.1vw,0.8rem)] tracking-[0.25em]">
+						(&nbsp;&nbsp;<?php echo esc_html($coordinates); ?>&nbsp;&nbsp;)
+					</span>
+				</div>
+
+				<!-- Titolone — font icon-serif (New Icon Serif) -->
+				<h1 class="font-icon-serif text-white text-[clamp(2.2rem,7vw,5.8rem)] leading-[1.1] uppercase mb-10">
+					<?php echo esc_html($title_line_1); ?><br><?php echo esc_html($title_line_2); ?>
+				</h1>
+
+				<!-- Data odierna (JS) + SVG sottolineatura ondulata -->
+				<div>
+					<span
+						id="hero-date"
+						class="font-typewriter text-white text-xs tracking-[0.2em] block mb-1.5"></span>
+					<span
+						class="font-doodles text-white text-9xl scale-180 block leading-none"
+						aria-hidden="true">r</span>
+				</div>
+
 			</div>
-
-			<!-- Titolone — font icon-serif (New Icon Serif) -->
-			<h1 class="font-icon-serif text-white text-[clamp(2.2rem,7vw,5.8rem)] leading-[1.1] uppercase mb-10">
-				<?php echo esc_html($title_line_1); ?><br><?php echo esc_html($title_line_2); ?>
-			</h1>
-
-			<!-- Data odierna (JS) + SVG sottolineatura ondulata -->
-			<div>
-				<span
-					id="hero-date"
-					class="font-typewriter text-white text-xs tracking-[0.2em] block mb-1.5"></span>
-				<span
-					class="font-doodles text-white text-9xl scale-180 block leading-none"
-					aria-hidden="true">r</span>
-			</div>
-
-		</div>
 		</div>
 
 		<!-- TESTO SINISTRA — font script -->
@@ -118,11 +118,11 @@ $text_right = $acf('hero_text_right')
 			</p>
 		</div>
 
-	 <div class="ipsilon-hero-wrapper absolute bottom-[8%] lg:bottom-[12%] left-1/2 -translate-x-1/2 rotate-90 z-20 pointer-events-none">
-      <span
-        class="ipsilon-hero font-doodles text-white text-9xl scale-180 block leading-none -translate-y-3 lg:-translate-y-5 animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
-        aria-hidden="true">y</span>
-    </div>
+		<div class="ipsilon-hero-wrapper absolute bottom-[8%] lg:bottom-[12%] left-1/2 -translate-x-1/2 rotate-90 z-20 pointer-events-none">
+			<span
+				class="ipsilon-hero font-doodles text-white text-9xl scale-180 block leading-none -translate-y-3 lg:-translate-y-5 animate-[heroArrowBounce_2.4s_ease-in-out_infinite]"
+				aria-hidden="true">y</span>
+		</div>
 
 	</section>
 	<!-- ═══════════════════════════════════════════════
@@ -279,8 +279,8 @@ $text_right = $acf('hero_text_right')
 			<p class="font-script text-blue text-[clamp(1.4rem,2.8vw,2.2rem)] leading-[34px]">
 				La mia cucina nasce dall'incontro tra mare e<br class="hidden lg:block">
 				terra, tra memoria e intuizione, lavorando<br class="hidden lg:block">
-					ingredienti locali e stagionali, con interventi<br class="hidden lg:block">
-						essenziali. Perché quando il prodotto è giusto,<br class="hidden lg:block">
+				ingredienti locali e stagionali, con interventi<br class="hidden lg:block">
+				essenziali. Perché quando il prodotto è giusto,<br class="hidden lg:block">
 				la cucina deve solo accompagnarlo.
 			</p>
 		</div>
@@ -296,113 +296,113 @@ $text_right = $acf('hero_text_right')
 	     sezioni successive non vengono spostate.
 	     ═══════════════════════════════════════════════ -->
 	<div class="mare-video-wrapper">
-	<section class="mare-video-section relative w-full h-screen overflow-hidden" style="z-index:2; background:#23222D;">
+		<section class="mare-video-section relative w-full h-screen overflow-hidden" style="z-index:2; background:#23222D;">
 
-		<!-- MARQUEE INFINITO "MARE MADRE" -->
-		<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
-			<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
-				<?php for ($i = 0; $i < 10; $i++) : ?>
-					<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase leading-none select-none px-6">MARE MADRE</h3>
-				<?php endfor; ?>
-			</div>
-		</div>
-
-		<!-- VIDEO FRAME -->
-		<div class="mare-video-frame absolute inset-0 will-change-transform z-20">
-			<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-				<source src="<?php echo $video_madre_url; ?>" type="video/webm">
-			</video>
-		</div>
-
-		<!-- BOTTONE CIRCOLARE CHIUDI/APRI -->
-		<button
-			class="mare-toggle-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 rounded-full border border-white/50 bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-white/30"
-			aria-label="Apri o chiudi il video">
-			<span class="mare-toggle-label font-typewriter text-white text-[0.6rem] tracking-[0.25em] uppercase select-none pointer-events-none">CHIUDI</span>
-		</button>
-
-	</section>
-
-	<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
-	<?php
-	$fish_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg');
-	$soup_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg');
-	?>
-	<section id="mmadre" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden" style="z-index:1;">
-
-		<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
-
-			<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
-			<div class="mare-madre-from-left hidden lg:block absolute top-24 left-[3%] w-[13%] pointer-events-none will-change-transform">
-				<div>
-					<?php if ($fish_id) : ?>
-						<?php echo get_custom_responsive_image($fish_id, 'large', 'block w-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
+			<!-- MARQUEE INFINITO "MARE MADRE" -->
+			<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
+				<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
+					<?php for ($i = 0; $i < 10; $i++) : ?>
+						<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase leading-none select-none px-6">MARE MADRE</h3>
+					<?php endfor; ?>
 				</div>
 			</div>
 
-			<!-- FOTO DESTRA — desktop: assoluta top-right, animazione JS (xPercent + rotation) -->
-			<div class="mare-madre-from-right hidden lg:block absolute top-1/2 right-[3%] w-[13%] pointer-events-none will-change-transform">
-				<div>
-					<?php if ($soup_id) : ?>
-						<?php echo get_custom_responsive_image($soup_id, 'large', 'block w-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
+			<!-- VIDEO FRAME -->
+			<div class="mare-video-frame absolute inset-0 will-change-transform z-20">
+				<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+					<source src="<?php echo $video_madre_url; ?>" type="video/webm">
+				</video>
 			</div>
 
-			<!-- CONTENUTO CENTRALE -->
-			<div class="relative max-w-6xl mx-auto text-center">
+			<!-- BOTTONE CIRCOLARE CHIUDI/APRI -->
+			<button
+				class="mare-toggle-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 rounded-full border border-white/50 bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-white/30"
+				aria-label="Apri o chiudi il video">
+				<span class="mare-toggle-label font-typewriter text-white text-[0.6rem] tracking-[0.25em] uppercase select-none pointer-events-none">CHIUDI</span>
+			</button>
 
-				<!-- Etichetta typewriter -->
-				<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase mb-3">
-					( &nbsp;Mare Madre&nbsp; )
-				</p>
+		</section>
 
-				<!-- Decorazione wavy doodles -->
-				<span class="font-doodles block text-8xl leading-none mb-6 scale-x-125 -mt-10" aria-hidden="true">r</span>
+		<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
+		<?php
+		$fish_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg');
+		$soup_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg');
+		?>
+		<section id="mmadre" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden" style="z-index:1;">
 
-				<!-- Titolo principale — New Icon Serif -->
-				<h2 class="font-icon-serif text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.2] uppercase mb-10">
-					Mare Madre è la mia bussola.<br class="hidden lg:block">
-					Ogni giorno il mare mi affida i suoi<br class="hidden lg:block">
-					doni e io li trasformo senza tradirne<br class="hidden lg:block">
-					la verità.
-				</h2>
+			<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
 
-				<!-- Citazione corsivo — Morning Memories gold -->
-				<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
-					Mare Madre è la lotta silenziosa tra quello che<br class="hidden lg:block">
-					l&rsquo;acqua decide di regalarmi e la mia<br class="hidden lg:block">
-					responsabilità di portarlo a terra.
-				</p>
+				<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
+				<div class="mare-madre-from-left hidden lg:block absolute top-24 left-[3%] w-[13%] pointer-events-none will-change-transform">
+					<div>
+						<?php if ($fish_id) : ?>
+							<?php echo get_custom_responsive_image($fish_id, 'large', 'block w-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<!-- FOTO DESTRA — desktop: assoluta top-right, animazione JS (xPercent + rotation) -->
+				<div class="mare-madre-from-right hidden lg:block absolute top-1/2 right-[3%] w-[13%] pointer-events-none will-change-transform">
+					<div>
+						<?php if ($soup_id) : ?>
+							<?php echo get_custom_responsive_image($soup_id, 'large', 'block w-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<!-- CONTENUTO CENTRALE -->
+				<div class="relative max-w-6xl mx-auto text-center">
+
+					<!-- Etichetta typewriter -->
+					<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase mb-3">
+						( &nbsp;Mare Madre&nbsp; )
+					</p>
+
+					<!-- Decorazione wavy doodles -->
+					<span class="font-doodles block text-8xl leading-none mb-6 scale-x-125 -mt-10" aria-hidden="true">r</span>
+
+					<!-- Titolo principale — New Icon Serif -->
+					<h2 class="font-icon-serif text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.2] uppercase mb-10">
+						Mare Madre è la mia bussola.<br class="hidden lg:block">
+						Ogni giorno il mare mi affida i suoi<br class="hidden lg:block">
+						doni e io li trasformo senza tradirne<br class="hidden lg:block">
+						la verità.
+					</h2>
+
+					<!-- Citazione corsivo — Morning Memories gold -->
+					<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
+						Mare Madre è la lotta silenziosa tra quello che<br class="hidden lg:block">
+						l&rsquo;acqua decide di regalarmi e la mia<br class="hidden lg:block">
+						responsabilità di portarlo a terra.
+					</p>
+
+				</div>
+
+				<!-- FOTO MOBILE — solo su mobile, in fondo alla sezione -->
+				<div class="flex lg:hidden justify-between items-start mt-16 px-4 gap-4">
+					<div class="mare-madre-mobile-left w-[46%] will-change-transform">
+						<?php if ($fish_id) : ?>
+							<?php echo get_custom_responsive_image($fish_id, 'medium', 'block w-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+					<div class="mare-madre-mobile-right w-[46%] mt-10 will-change-transform">
+						<?php if ($soup_id) : ?>
+							<?php echo get_custom_responsive_image($soup_id, 'medium', 'block w-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
 
 			</div>
 
-			<!-- FOTO MOBILE — solo su mobile, in fondo alla sezione -->
-			<div class="flex lg:hidden justify-between items-start mt-16 px-4 gap-4">
-				<div class="mare-madre-mobile-left w-[46%] will-change-transform">
-					<?php if ($fish_id) : ?>
-						<?php echo get_custom_responsive_image($fish_id, 'medium', 'block w-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
-				<div class="mare-madre-mobile-right w-[46%] mt-10 will-change-transform">
-					<?php if ($soup_id) : ?>
-						<?php echo get_custom_responsive_image($soup_id, 'medium', 'block w-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
-			</div>
-
-		</div>
-
-	</section>
+		</section>
 	</div><!-- /video-reveal-wrapper 1 -->
 
 	<!-- ═══════════════════════════════════════════════
@@ -414,115 +414,115 @@ $text_right = $acf('hero_text_right')
 	     sezioni successive non vengono spostate.
 	     ═══════════════════════════════════════════════ -->
 	<div class="mare-video-wrapper">
-	<section class="mare-video-section relative w-full h-screen overflow-hidden" style="z-index:2; background:#192422;">
+		<section class="mare-video-section relative w-full h-screen overflow-hidden" style="z-index:2; background:#192422;">
 
-		<!-- MARQUEE INFINITO "MARE MADRE" -->
-		<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
-			<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
-				<?php for ($i = 0; $i < 10; $i++) : ?>
-					<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase tracking-[0.18em] leading-none select-none px-4">L'ORTO</h3>
-				<?php endfor; ?>
-			</div>
-		</div>
-
-		<!-- IMAGE FRAME -->
-		<div class="mare-video-frame absolute inset-0 will-change-transform z-20">
-			<?php if ($orto_img_id) : ?>
-				<?php echo get_custom_responsive_image($orto_img_id, 'full', 'absolute inset-0 w-full h-full object-cover object-center'); ?>
-			<?php else : ?>
-				<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/gallery-1-1.jpg'); ?>" alt="" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy">
-			<?php endif; ?>
-		</div>
-
-		<!-- BOTTONE CIRCOLARE CHIUDI/APRI -->
-		<button
-			class="mare-toggle-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 rounded-full border border-white/50 bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-white/30"
-			aria-label="Apri o chiudi il video">
-			<span class="mare-toggle-label font-typewriter text-white text-[0.6rem] tracking-[0.25em] uppercase select-none pointer-events-none">CHIUDI</span>
-		</button>
-
-	</section>
-
-	<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
-	<?php
-	$fish_bacca_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/fish_bacca.jpg');
-	$ravioli_id    = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/ravioli.jpg');
-	?>
-	<section id="orto" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden h-full" style="z-index:1;">
-
-		<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
-
-			<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
-			<div class="mare-madre-from-left hidden lg:block absolute top-1/2 left-[3%] w-[13%] pointer-events-none will-change-transform">
-				<div class="aspect-3/4! overflow-hidden">
-					<?php if ($fish_bacca_id) : ?>
-						<?php echo get_custom_responsive_image($fish_bacca_id, 'large', 'block w-full h-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
+			<!-- MARQUEE INFINITO "MARE MADRE" -->
+			<div class="absolute inset-0 flex items-center pointer-events-none z-10 overflow-hidden">
+				<div class="mare-marquee-track flex whitespace-nowrap will-change-transform">
+					<?php for ($i = 0; $i < 10; $i++) : ?>
+						<h3 class="font-icon-serif text-white text-4xl lg:text-[6vw] uppercase tracking-[0.18em] leading-none select-none px-4">L'ORTO</h3>
+					<?php endfor; ?>
 				</div>
 			</div>
 
-			<!-- FOTO DESTRA — desktop: assoluta top-right, animazione JS (xPercent + rotation) -->
-			<div class="mare-madre-from-right hidden lg:block absolute top-24 right-[3%] w-[13%] pointer-events-none will-change-transform">
-				<div class="aspect-3/4! overflow-hidden">
-					<?php if ($ravioli_id) : ?>
-						<?php echo get_custom_responsive_image($ravioli_id, 'large', 'block w-full h-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
+			<!-- IMAGE FRAME -->
+			<div class="mare-video-frame absolute inset-0 will-change-transform z-20">
+				<?php if ($orto_img_id) : ?>
+					<?php echo get_custom_responsive_image($orto_img_id, 'full', 'absolute inset-0 w-full h-full object-cover object-center'); ?>
+				<?php else : ?>
+					<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/gallery-1-1.jpg'); ?>" alt="" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy">
+				<?php endif; ?>
 			</div>
 
-			<!-- CONTENUTO CENTRALE -->
-			<div class="relative max-w-6xl mx-auto text-center">
+			<!-- BOTTONE CIRCOLARE CHIUDI/APRI -->
+			<button
+				class="mare-toggle-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 rounded-full border border-white/50 bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-white/30"
+				aria-label="Apri o chiudi il video">
+				<span class="mare-toggle-label font-typewriter text-white text-[0.6rem] tracking-[0.25em] uppercase select-none pointer-events-none">CHIUDI</span>
+			</button>
 
-				<!-- Etichetta typewriter -->
-				<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase mb-3">
-					( &nbsp;l'orto&nbsp; )
-				</p>
+		</section>
 
-				<!-- Decorazione wavy doodles -->
-				<span class="font-doodles block text-8xl leading-none mb-6 scale-x-125 -mt-10" aria-hidden="true">N</span>
+		<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
+		<?php
+		$fish_bacca_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/fish_bacca.jpg');
+		$ravioli_id    = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/ravioli.jpg');
+		?>
+		<section id="orto" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden h-full" style="z-index:1;">
 
-				<!-- Titolo principale — New Icon Serif -->
-				<h2 class="font-icon-serif text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.2] uppercase mb-10">
-					La terra parla con<br>
-					lo stesso ritmo del mare.<br>
-					Basta imparare ad ascoltarla.<br>
-				</h2>
+			<div class="relative px-6 py-20 lg:py-32 xl:py-44 2xl:py-56">
 
-				<!-- Citazione corsivo — Morning Memories gold -->
-				<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
-					Ogni stagione cambia il colore degli orti<br class="hidden lg:block">
-					e con esso cambia la cucina.<br class="hidden lg:block">
+				<!-- FOTO SINISTRA — desktop: assoluta top-left, animazione JS (xPercent + rotation) -->
+				<div class="mare-madre-from-left hidden lg:block absolute top-1/2 left-[3%] w-[13%] pointer-events-none will-change-transform">
+					<div class="aspect-3/4! overflow-hidden">
+						<?php if ($fish_bacca_id) : ?>
+							<?php echo get_custom_responsive_image($fish_bacca_id, 'large', 'block w-full h-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<!-- FOTO DESTRA — desktop: assoluta top-right, animazione JS (xPercent + rotation) -->
+				<div class="mare-madre-from-right hidden lg:block absolute top-24 right-[3%] w-[13%] pointer-events-none will-change-transform">
+					<div class="aspect-3/4! overflow-hidden">
+						<?php if ($ravioli_id) : ?>
+							<?php echo get_custom_responsive_image($ravioli_id, 'large', 'block w-full h-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<!-- CONTENUTO CENTRALE -->
+				<div class="relative max-w-6xl mx-auto text-center">
+
+					<!-- Etichetta typewriter -->
+					<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase mb-3">
+						( &nbsp;l'orto&nbsp; )
+					</p>
+
+					<!-- Decorazione wavy doodles -->
+					<span class="font-doodles block text-8xl leading-none mb-6 scale-x-125 -mt-10" aria-hidden="true">N</span>
+
+					<!-- Titolo principale — New Icon Serif -->
+					<h2 class="font-icon-serif text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.2] uppercase mb-10">
+						La terra parla con<br>
+						lo stesso ritmo del mare.<br>
+						Basta imparare ad ascoltarla.<br>
+					</h2>
+
+					<!-- Citazione corsivo — Morning Memories gold -->
+					<p class="font-script text-gold text-2xl lg:text-4xl leading-8.5 -rotate-2">
+						Ogni stagione cambia il colore degli orti<br class="hidden lg:block">
+						e con esso cambia la cucina.<br class="hidden lg:block">
 						Verdure, erbe e radici diventano parte della<br class="hidden lg:block">
-							stessa storia che comincia al largo e finisce nel piatto.
-				</p>
+						stessa storia che comincia al largo e finisce nel piatto.
+					</p>
+
+				</div>
+
+				<!-- FOTO MOBILE — solo su mobile, in fondo alla sezione -->
+				<div class="flex lg:hidden justify-between items-start mt-16 px-4 gap-4">
+					<div class="mare-madre-mobile-left w-[46%] will-change-transform">
+						<?php if ($fish_bacca_id) : ?>
+							<?php echo get_custom_responsive_image($fish_bacca_id, 'medium', 'block w-full object-cover h-full aspect-[3/4]!'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+					<div class="mare-madre-mobile-right w-[46%] mt-10 will-change-transform">
+						<?php if ($ravioli_id) : ?>
+							<?php echo get_custom_responsive_image($ravioli_id, 'medium', 'block w-full object-cover'); ?>
+						<?php else : ?>
+							<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
+						<?php endif; ?>
+					</div>
+				</div>
 
 			</div>
 
-			<!-- FOTO MOBILE — solo su mobile, in fondo alla sezione -->
-			<div class="flex lg:hidden justify-between items-start mt-16 px-4 gap-4">
-				<div class="mare-madre-mobile-left w-[46%] will-change-transform">
-					<?php if ($fish_bacca_id) : ?>
-						<?php echo get_custom_responsive_image($fish_bacca_id, 'medium', 'block w-full object-cover h-full aspect-[3/4]!'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
-				<div class="mare-madre-mobile-right w-[46%] mt-10 will-change-transform">
-					<?php if ($ravioli_id) : ?>
-						<?php echo get_custom_responsive_image($ravioli_id, 'medium', 'block w-full object-cover'); ?>
-					<?php else : ?>
-						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg'); ?>" alt="" class="block w-full object-cover" loading="lazy">
-					<?php endif; ?>
-				</div>
-			</div>
-
-		</div>
-
-	</section>
+		</section>
 	</div><!-- /video-reveal-wrapper 2 -->
 
 	<!-- ═══════════════════════════════════════════════
@@ -533,40 +533,51 @@ $text_right = $acf('hero_text_right')
 		.imenu-text {
 			margin-top: .9em;
 		}
+
 		/* Tutti i browser su OS Apple (macOS, iOS, iPadOS) — rilevato via JS */
 		.is-apple-os .imenu-text {
 			margin-top: 0.35em;
 		}
+
 		.is-apple-os .i-menu-arrow {
 			@apply translate-y-[10%]
 		}
+
 		@media (min-width: 1024px) {
 			.menu-tab {
 				background-color: #ffffff;
 				transition: background-color 0.45s ease;
 			}
+
 			.menu-tab:hover {
 				background-color: #23222D;
 			}
+
 			.menu-tab-title {
 				transition: color 0.45s ease;
 			}
+
 			.menu-tab:hover .menu-tab-title {
 				color: #ffffff;
 			}
+
 			.menu-tab-subtitle {
 				transition: color 0.45s ease;
 			}
+
 			.menu-tab:hover .menu-tab-subtitle {
 				color: rgba(255, 255, 255, 0.55);
 			}
+
 			.menu-tab-img {
 				opacity: 0;
 				transition: opacity 0.35s ease;
 			}
+
 			.menu-tab:hover .menu-tab-img {
 				opacity: 1;
 			}
+
 			.imenu-text {
 				margin-top: 1em;
 			}
@@ -595,19 +606,19 @@ $text_right = $acf('hero_text_right')
 			</div>
 
 			<div class="w-full lg:w-fit lg:mx-auto -mt-6 lg:mt-auto">
-			<!-- Titolo MARE MADRE — centrato, grande -->
-			<h2 class="font-icon-serif text-blue text-center text-9xl lg:text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.9] tracking-tight mb-5 lg:mb-7 -translate-x-1.5">
-				MARE MADRE
-			</h2>
-			<!-- Riga sottotitolo: sinistra diario + destra coordinate -->
-			<div class="flex flex-col items-center lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-				<p class="font-typewriter text-blue text-[clamp(0.5rem,0.82vw,0.72rem)] tracking-[0.15em] uppercase m-0">
-					<span style="border-bottom: 1px solid #23222D;">DIARIO</span> DI BORDO DI ALESSANDRO FEO
-				</p>
-				<p class="font-typewriter text-blue text-[clamp(0.5rem,0.82vw,0.72rem)] tracking-[0.15em] m-0 whitespace-nowrap">
-					40&deg;10&prime;31&Prime;N&nbsp;&nbsp;15&deg;07&prime;01&Prime;E
-				</p>
-			</div>
+				<!-- Titolo MARE MADRE — centrato, grande -->
+				<h2 class="font-icon-serif text-blue text-center text-9xl lg:text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.9] tracking-tight mb-5 lg:mb-7 -translate-x-1.5">
+					MARE MADRE
+				</h2>
+				<!-- Riga sottotitolo: sinistra diario + destra coordinate -->
+				<div class="flex flex-col items-center lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
+					<p class="font-typewriter text-blue text-[clamp(0.5rem,0.82vw,0.72rem)] tracking-[0.15em] uppercase m-0">
+						<span style="border-bottom: 1px solid #23222D;">DIARIO</span> DI BORDO DI ALESSANDRO FEO
+					</p>
+					<p class="font-typewriter text-blue text-[clamp(0.5rem,0.82vw,0.72rem)] tracking-[0.15em] m-0 whitespace-nowrap">
+						40&deg;10&prime;31&Prime;N&nbsp;&nbsp;15&deg;07&prime;01&Prime;E
+					</p>
+				</div>
 			</div>
 
 
@@ -619,7 +630,7 @@ $text_right = $acf('hero_text_right')
 		?>
 
 		<!-- TAB 1: LE TRE ROTTE ─────────────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/04/FEO_Menu_A4.pdf'); ?>" target="_blank" class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/01-LE-DUE-ROTTE-MENU-DEGUSTAZIONE.pdf'); ?>" target="_blank" class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop: titolo e sottotitolo inline -->
@@ -656,7 +667,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 2: NAVIGAZIONE LIBERA ───────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/04/FEO_Menu_A4.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/02-NAVIGAZIONE-LIBERA-MENU-ALLA-CARTA.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
@@ -681,13 +692,47 @@ $text_right = $acf('hero_text_right')
 
 			<!-- Immagine hover — desktop only, wrapper aspect-ratio + overflow-hidden -->
 			<div class="menu-tab-img hidden lg:block absolute right-14 top-1/2 rotate-6 -translate-y-1/2 w-[20%] max-w-[260px] pointer-events-none will-change-transform z-20"
-				 aria-hidden="true">
+				aria-hidden="true">
 				<div class="aspect-[3/4] overflow-hidden">
 					<?php if ($navigazione_libera_id) : ?>
 						<?php echo get_custom_responsive_image($navigazione_libera_id, 'large', 'block w-full h-full object-cover'); ?>
 					<?php else : ?>
 						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/navigazione_libera.jpg'); ?>" alt="" class="block w-full h-full object-cover" loading="lazy">
 					<?php endif; ?>
+				</div>
+			</div>
+
+		</a>
+
+		<!-- TAB 3: DOLCI ───────────── -->
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/03-I-TESORI-DELLA-COSTA-MENU-DOLCI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+
+			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
+				<!-- Desktop -->
+				<div class="hidden lg:flex items-baseline gap-6">
+					<h3 class="menu-tab-title font-icon-serif text-[clamp(2.5rem,7vw,6.5rem)] text-blue uppercase leading-none group-hover:text-white">
+						I TESORI DELLA COSTA
+					</h3>
+					<span class="menu-tab-subtitle font-typewriter text-[clamp(0.6rem,0.9vw,0.8rem)] text-blue tracking-[0.2em] uppercase group-hover:text-white">
+						( MEN&Ugrave; DOLCI )
+					</span>
+				</div>
+				<!-- Mobile -->
+				<div class="lg:hidden">
+					<h3 class="font-icon-serif text-blue group-hover:text-white text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
+						DOLCI
+					</h3>
+					<span class="font-typewriter text-blue group-hover:text-white text-[0.7rem] tracking-[0.2em] uppercase">
+						( MEN&Ugrave; DOLCI )
+					</span>
+				</div>
+			</div>
+
+			<!-- Immagine hover — desktop only, wrapper aspect-ratio + overflow-hidden -->
+			<div class="menu-tab-img hidden lg:block absolute right-14 top-1/2 rotate-6 -translate-y-1/2 w-[20%] max-w-[260px] pointer-events-none will-change-transform z-20"
+				aria-hidden="true">
+				<div class="aspect-[3/4] overflow-hidden">
+					<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/083_FC--scaled.webp'); ?>" alt="" class="block w-full h-full object-cover" loading="lazy">
 				</div>
 			</div>
 
@@ -700,10 +745,10 @@ $text_right = $acf('hero_text_right')
 	     ═══════════════════════════════════════════════ -->
 	<?php
 	$gallery_2_images = [
-		[ 'url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-1.jpg' ],
-		[ 'url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-2.png' ],
-		[ 'url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-3.png' ],
-		[ 'url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-4.png' ],
+		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-1.jpg'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-2.png'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-3.png'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-4.png'],
 	];
 	?>
 	<section class="gallery-polaroid-section relative w-full bg-white overflow-hidden py-20 lg:py-32 px-4">
