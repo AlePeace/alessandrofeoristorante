@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.42');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.45');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -149,6 +149,8 @@ add_action('widgets_init', 'alessandrofeoristorante_widgets_init');
 function alessandrofeoristorante_scripts()
 {
 	wp_enqueue_style('alessandrofeoristorante-style', get_stylesheet_uri(), array(), ALESSANDROFEORISTORANTE_VERSION);
+	// CSS generato da esbuild (Swiper, flatpickr, ...) bundled in js/script.css
+	wp_enqueue_style('alessandrofeoristorante-bundle', get_template_directory_uri() . '/js/script.css', array(), ALESSANDROFEORISTORANTE_VERSION);
 	wp_enqueue_script('alessandrofeoristorante-script', get_template_directory_uri() . '/js/script.min.js', array(), ALESSANDROFEORISTORANTE_VERSION, true);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {

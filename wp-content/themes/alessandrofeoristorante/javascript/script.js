@@ -13,6 +13,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 import Lenis from 'lenis';
+import flatpickr from 'flatpickr';
+import { Italian } from 'flatpickr/dist/l10n/it.js';
+import 'flatpickr/dist/flatpickr.min.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -328,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initMenuSection();
 	initEventiMarquee();
 	initFeoFriendsSwiper();
+	initRiservaDatepicker();
 	// Ricalcola tutte le posizioni ScrollTrigger dopo il rendering iniziale.
 	ScrollTrigger.refresh();
 });
@@ -603,6 +607,27 @@ function initFeoFriendsSwiper() {
 		grabCursor: true,
 		centeredSlides: true,
 		loop: true,
+	});
+}
+
+// ─────────────────────────────────────────────
+// DATEPICKER RISERVA (Contact Form 7)
+// Sostituisce l'input nativo (su iOS non mostra il
+// formato/placeholder) con flatpickr: formato GG/MM/AA
+// identico su iOS, Android e desktop.
+// Il campo CF7 va dichiarato come:
+//   [text* data id:riserva-data placeholder "GG/MM/AA"]
+// ─────────────────────────────────────────────
+
+function initRiservaDatepicker() {
+	const input = document.querySelector('#riserva-data');
+	if (!input) return;
+
+	flatpickr(input, {
+		locale: Italian,
+		dateFormat: 'd/m/y', // → GG/MM/AA
+		minDate: 'today',
+		disableMobile: true, // forza il calendario custom anche su iOS
 	});
 }
 

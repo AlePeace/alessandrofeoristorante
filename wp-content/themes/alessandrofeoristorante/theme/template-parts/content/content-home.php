@@ -35,6 +35,12 @@ $orto_img_id  = $orto_img_acf
 	? (is_array($orto_img_acf) ? $orto_img_acf['ID'] : attachment_url_to_postid($orto_img_acf))
 	: attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/gallery-1-1.jpg');
 
+// ACF: video background sezione L'Orto
+$video_orto_acf = $acf('orto_video_url');
+$video_orto_url  = $video_orto_acf
+	? esc_url(is_array($video_orto_acf) ? $video_orto_acf['url'] : $video_orto_acf)
+	: esc_url(get_site_url() . '/wp-content/uploads/2026/06/feo_field.webm');
+
 // ACF: coordinate geografiche
 $coordinates = $acf('hero_coordinates')
 	?: __("40°10'31\"N  15°07'01\"E", 'alessandrofeoristorante');
@@ -140,7 +146,7 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<!-- IMMAGINE — ScrollTrigger: clip-path espande + rotazione da -12 a 0 -->
-		<?php $plate_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_oil.jpg'); ?>
+		<?php $plate_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/032_FC--scaled.webp'); ?>
 		<div class="rotta-img-clip relative w-[90%] max-w-xl !aspect-[2/3]">
 			<?php echo get_custom_responsive_image($plate_id, 'full', 'block w-full h-full object-cover object-center'); ?>
 		</div>
@@ -177,12 +183,13 @@ $text_right = $acf('hero_text_right')
 			'text_pos' => 'bottom', // testo sotto
 		],
 		[
-			'url'  => get_site_url() . '/wp-content/uploads/2026/03/gallery-1-2.png',
+			'url'  => get_site_url() . '/wp-content/uploads/2026/06/018_FC--scaled.webp',
 			'text' => __('Il mare cambia ogni giorno.<br> Il piatto racconta solo quell\'attimo.', 'alessandrofeoristorante'),
 			'text_pos' => 'top', // testo sopra
+			'object_pos' => 'object-bottom', // allineamento immagine (default: object-center)
 		],
 		[
-			'url'  => get_site_url() . '/wp-content/uploads/2026/03/gallery-1-3.jpg',
+			'url'  => get_site_url() . '/wp-content/uploads/2026/06/FC2_7700-dimensioni-medie-scaled.webp',
 			'text' => __('Non cerco effetti.<br>Cerco verità.', 'alessandrofeoristorante'),
 			'text_pos' => 'bottom', // testo sotto
 		],
@@ -199,6 +206,8 @@ $text_right = $acf('hero_text_right')
 
 			<?php foreach ($gallery_images as $idx => $img) :
 				$img_id = attachment_url_to_postid($img['url']);
+				// allineamento object-position per immagine (default: object-center)
+				$object_pos = $img['object_pos'] ?? 'object-center';
 				// left group: idx 0,1 → slide in from left; right group: idx 2,3 → slide in from right
 				$from_dir = ($idx < 2) ? 'left' : 'right';
 				// Rotazioni polaroid alternanti
@@ -219,9 +228,9 @@ $text_right = $acf('hero_text_right')
 					<div class="gallery-polaroid-frame <?php echo $rot; ?> will-change-transform">
 						<div class="w-full overflow-hidden">
 							<?php if ($img_id) : ?>
-								<?php echo get_custom_responsive_image($img_id, 'large', 'block w-full h-full object-cover object-center'); ?>
+								<?php echo get_custom_responsive_image($img_id, 'large', 'block w-full h-full object-cover ' . $object_pos); ?>
 							<?php else : ?>
-								<img src="<?php echo esc_url($img['url']); ?>" alt="" class="block w-full h-full object-cover object-center" loading="lazy">
+								<img src="<?php echo esc_url($img['url']); ?>" alt="" class="block w-full h-full object-cover <?php echo esc_attr($object_pos); ?>" loading="lazy">
 							<?php endif; ?>
 						</div>
 					</div>
@@ -325,8 +334,8 @@ $text_right = $acf('hero_text_right')
 
 		<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
 		<?php
-		$fish_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_fish.jpg');
-		$soup_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/plate_soup.jpg');
+		$fish_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/029_FC--scaled.webp');
+		$soup_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/023_FC--scaled.webp');
 		?>
 		<section id="mmadre" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden" style="z-index:1;">
 
@@ -425,13 +434,11 @@ $text_right = $acf('hero_text_right')
 				</div>
 			</div>
 
-			<!-- IMAGE FRAME -->
+			<!-- VIDEO FRAME -->
 			<div class="mare-video-frame absolute inset-0 will-change-transform z-20">
-				<?php if ($orto_img_id) : ?>
-					<?php echo get_custom_responsive_image($orto_img_id, 'full', 'absolute inset-0 w-full h-full object-cover object-center'); ?>
-				<?php else : ?>
-					<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/03/gallery-1-1.jpg'); ?>" alt="" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy">
-				<?php endif; ?>
+				<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+					<source src="<?php echo $video_orto_url; ?>" type="video/webm">
+				</video>
 			</div>
 
 			<!-- BOTTONE CIRCOLARE CHIUDI/APRI -->
@@ -445,8 +452,8 @@ $text_right = $acf('hero_text_right')
 
 		<!-- SEZIONE MARE MADRE — si rivela da sotto il video -->
 		<?php
-		$fish_bacca_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/fish_bacca.jpg');
-		$ravioli_id    = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/ravioli.jpg');
+		$fish_bacca_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/082_FC--scaled.webp');
+		$ravioli_id    = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/074_FC--scaled.webp');
 		?>
 		<section id="orto" class="mare-madre-section relative w-full bg-white text-blue overflow-hidden h-full" style="z-index:1;">
 
@@ -705,7 +712,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 3: DOLCI ───────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/03-I-TESORI-DELLA-COSTA-MENU-DOLCI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/03-I-TESORI-DELLA-COSTA-MENU-DOLCI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
@@ -738,6 +745,40 @@ $text_right = $acf('hero_text_right')
 
 		</a>
 
+		<!-- TAB 4: CARTA VINI ───────────── -->
+		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/06/04-CARTA-VINI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+
+			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
+				<!-- Desktop -->
+				<div class="hidden lg:flex items-baseline gap-6">
+					<h3 class="menu-tab-title font-icon-serif text-[clamp(2.5rem,7vw,6.5rem)] text-blue uppercase leading-none group-hover:text-white">
+						RISERVA DELLA STIVA
+					</h3>
+					<span class="menu-tab-subtitle font-typewriter text-[clamp(0.6rem,0.9vw,0.8rem)] text-blue tracking-[0.2em] uppercase group-hover:text-white">
+						( CARTA VINI )
+					</span>
+				</div>
+				<!-- Mobile -->
+				<div class="lg:hidden">
+					<h3 class="font-icon-serif text-blue group-hover:text-white text-[clamp(2.8rem,10vw,5rem)] uppercase leading-none mb-2">
+						RISERVA DELLA STIVA
+					</h3>
+					<span class="font-typewriter text-blue group-hover:text-white text-[0.7rem] tracking-[0.2em] uppercase">
+						( CARTA VINI )
+					</span>
+				</div>
+			</div>
+
+			<!-- Immagine hover — desktop only, wrapper aspect-ratio + overflow-hidden -->
+			<div class="menu-tab-img hidden lg:block absolute right-14 top-1/2 rotate-6 -translate-y-1/2 w-[20%] max-w-[260px] pointer-events-none will-change-transform z-20"
+				aria-hidden="true">
+				<div class="aspect-[3/4] overflow-hidden">
+						<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/06/001_FC--scaled.webp'); ?>" alt="" class="block w-full h-full object-cover" loading="lazy">
+				</div>
+			</div>
+
+		</a>
+
 	</section>
 
 	<!-- ═══════════════════════════════════════════════
@@ -745,10 +786,10 @@ $text_right = $acf('hero_text_right')
 	     ═══════════════════════════════════════════════ -->
 	<?php
 	$gallery_2_images = [
-		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-1.jpg'],
-		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-2.png'],
-		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-3.png'],
-		['url' => get_site_url() . '/wp-content/uploads/2026/03/gallery-2-4.png'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/06/054_FC--scaled.webp'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/06/044_FC--scaled.webp'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/06/035_FC--scaled.webp'],
+		['url' => get_site_url() . '/wp-content/uploads/2026/06/005_FC--scaled.webp'],
 	];
 	?>
 	<section class="gallery-polaroid-section relative w-full bg-white overflow-hidden py-20 lg:py-32 px-4">
@@ -757,6 +798,7 @@ $text_right = $acf('hero_text_right')
 
 			<?php foreach ($gallery_2_images as $idx => $img) :
 				$img_id   = attachment_url_to_postid($img['url']);
+				$object_pos = $img['object_pos'] ?? 'object-center';
 				$from_dir = ($idx < 2) ? 'left' : 'right';
 				$rotations = ['-rotate-[3deg]', 'rotate-[2deg]', '-rotate-[1.5deg]', 'rotate-[2.5deg]'];
 				$rot = $rotations[$idx];
@@ -768,9 +810,9 @@ $text_right = $acf('hero_text_right')
 					<div class="gallery-polaroid-frame <?php echo $rot; ?> will-change-transform">
 						<div class="w-full overflow-hidden">
 							<?php if ($img_id) : ?>
-								<?php echo get_custom_responsive_image($img_id, 'large', 'block w-full h-full object-cover object-center'); ?>
+								<?php echo get_custom_responsive_image($img_id, 'large', 'block w-full h-full object-cover ' . $object_pos); ?>
 							<?php else : ?>
-								<img src="<?php echo esc_url($img['url']); ?>" alt="" class="block w-full h-full object-cover object-center" loading="lazy">
+								<img src="<?php echo esc_url($img['url']); ?>" alt="" class="block w-full h-full object-cover <?php echo esc_attr($object_pos); ?>" loading="lazy">
 							<?php endif; ?>
 						</div>
 					</div>
