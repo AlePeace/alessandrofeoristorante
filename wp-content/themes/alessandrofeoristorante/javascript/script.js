@@ -599,15 +599,46 @@ function initFullMenu() {
 // ─────────────────────────────────────────────
 
 function initFeoFriendsSwiper() {
-	const el = document.querySelector('.feo-friends-swiper');
-	if (!el) return;
+	const imgEl = document.querySelector('.feo-friends-swiper');
+	const textEl = document.querySelector('.feo-friends-text-swiper');
+	if (!imgEl || !textEl) return;
 
-	new Swiper('.feo-friends-swiper', {
+	// Swiper TESTO — effetto fade, non trascinabile, niente loop.
+	// È lo "schiavo": segue sempre l'immagine per indice.
+	const textSwiper = new Swiper(textEl, {
+		effect: 'fade',
+		fadeEffect: { crossFade: true },
+		allowTouchMove: false,
+		speed: 500,
+	});
+
+	// Swiper IMMAGINI — cards effect, trascinabile. È il "master".
+	// Niente loop: con 2 sole slide il loop sballa la card iniziale.
+	const imgSwiper = new Swiper(imgEl, {
 		effect: 'cards',
 		grabCursor: true,
-		centeredSlides: true,
-		loop: true,
+		speed: 500,
 	});
+
+	// Quando cambia l'immagine, il testo va sullo stesso indice:
+	// testo[0] ↔ card-1.png, testo[1] ↔ 98.webp. Mai mescolati.
+	imgSwiper.on('slideChange', () => {
+		if (textSwiper.activeIndex !== imgSwiper.activeIndex) {
+			textSwiper.slideTo(imgSwiper.activeIndex);
+		}
+	});
+
+	// I chevron muovono il master con wrap-around (0 → 1 → 0 ...),
+	// così girano all'infinito anche senza loop, e il testo segue.
+	const total = imgSwiper.slides.length;
+	const go = (dir) => {
+		const target = (imgSwiper.activeIndex + dir + total) % total;
+		imgSwiper.slideTo(target);
+	};
+	const prev = document.querySelector('.feo-friends-prev');
+	const next = document.querySelector('.feo-friends-next');
+	if (prev) prev.addEventListener('click', () => go(-1));
+	if (next) next.addEventListener('click', () => go(1));
 }
 
 // ─────────────────────────────────────────────

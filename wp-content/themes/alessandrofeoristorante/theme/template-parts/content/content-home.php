@@ -846,31 +846,83 @@ $text_right = $acf('hero_text_right')
 
 		<div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
-			<!-- COLONNA SINISTRA — testo -->
+			<!-- COLONNA SINISTRA — Swiper testo (sincronizzato con le cards) -->
 			<div class="w-full lg:w-1/2 flex flex-col gap-6">
 
-				<!-- Etichetta typewriter -->
+				<!-- Etichetta typewriter — fissa (sempre visibile) -->
 				<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase m-0">
 					( &nbsp;Gli eventi di Feo&nbsp; )
 				</p>
 
-				<!-- Titolo principale — New Icon Serif -->
-				<h2 class="font-icon-serif text-[clamp(3rem,7vw,6rem)] uppercase leading-[1.05] m-0">
-					Feo &amp; Friends
-				</h2>
+				<div class="swiper feo-friends-text-swiper w-full">
+					<div class="swiper-wrapper">
 
-				<!-- Testo descrittivo — typewriter -->
-				<div class="font-typewriter text-[clamp(0.85rem,1.05vw,1rem)] leading-[1.9] tracking-wide max-w-md">
-					<p class="m-0">Certe sere il mio diario di bordo si apre agli appunti e alle storie di altri chef.</p>
-					<br>
-					<p class="m-0">Feo &amp; Friends è un incontro tra cucine, idee e territori diversi. Amici che arrivano nel mio ristorante per cucinare insieme e raccontare il loro mare, la loro terra, la loro visione. Menu irripetibili, a più mani.</p>
+						<!-- Slide 1: Feo & Friends -->
+						<div class="swiper-slide">
+							<div class="flex flex-col gap-6">
+
+								<!-- Titolo principale — New Icon Serif -->
+								<h2 class="font-icon-serif text-[clamp(3rem,7vw,6rem)] uppercase leading-[1.05] m-0">
+									Feo &amp; Friends
+								</h2>
+
+								<!-- Testo descrittivo — typewriter -->
+								<div class="font-typewriter text-[clamp(0.85rem,1.05vw,1rem)] leading-[1.9] tracking-wide max-w-md">
+									<p class="m-0">Certe sere il mio diario di bordo si apre agli appunti e alle storie di altri chef.</p>
+									<br>
+									<p class="m-0">Feo &amp; Friends è un incontro tra cucine, idee e territori diversi. Amici che arrivano nel mio ristorante per cucinare insieme e raccontare il loro mare, la loro terra, la loro visione. Menu irripetibili, a più mani.</p>
+								</div>
+
+								<!-- CTA Button -->
+								<div class="mt-4">
+									<a href="#form" class="inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+										Riserva il tuo tavolo
+									</a>
+								</div>
+
+							</div>
+						</div>
+
+						<!-- Slide 2: Casal Velino al centro del mondo -->
+						<div class="swiper-slide">
+							<div class="flex flex-col gap-6">
+
+								<!-- Titolo principale — New Icon Serif -->
+								<h2 class="font-icon-serif text-[clamp(3rem,7vw,6rem)] uppercase leading-[1.05] m-0">
+									Casal Velino al centro del mondo
+								</h2>
+
+								<!-- Sottotitolo — stile etichetta typewriter -->
+								<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase m-0">
+									L'ambasciatore del Messico sceglie Alessandro Feo
+								</p>
+
+								<!-- Testo descrittivo — typewriter -->
+								<div class="font-typewriter text-[clamp(0.85rem,1.05vw,1rem)] leading-[1.9] tracking-wide max-w-md">
+									<p class="m-0">In tour nel Cilento, il diplomatico messicano farà tappa a Casal Velino per incontrare lo Chef, assaggiare la sua cucina e delineare un progetto futuro.</p>
+								</div>
+
+								<!-- CTA Button -->
+								<div class="mt-4">
+									<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/06/ComunicatoLuglio.pdf'); ?>" target="_blank" rel="noopener" class="inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+										Leggi comunicato
+									</a>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
 				</div>
 
-				<!-- CTA Button -->
-				<div class="mt-4">
-					<a href="#form" class="inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
-						Riserva il tuo tavolo
-					</a>
+				<!-- Chevron di navigazione (controllano entrambi gli swiper) -->
+				<div class="feo-friends-nav flex items-center gap-4 mt-8">
+					<button type="button" aria-label="Slide precedente" class="feo-friends-prev inline-flex items-center justify-center w-12 h-12 rounded-full text-blue transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+					</button>
+					<button type="button" aria-label="Slide successiva" class="feo-friends-next inline-flex items-center justify-center w-12 h-12 rounded-full text-blue transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+					</button>
 				</div>
 
 			</div>
@@ -881,7 +933,7 @@ $text_right = $acf('hero_text_right')
 					<div class="swiper feo-friends-swiper">
 						<div class="swiper-wrapper">
 
-							<!-- Slide 1: card-1.png -->
+							<!-- Slide 1: card-1.png (Feo & Friends) -->
 							<?php
 							$card1_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/card-1.png');
 							?>
@@ -895,14 +947,18 @@ $text_right = $acf('hero_text_right')
 								</div>
 							</div>
 
-							<!-- Slide 2: quadrato beige -->
+							<!-- Slide 2: 98.webp (Casal Velino) -->
+							<?php
+							$card2_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/06/98.webp');
+							?>
 							<div class="swiper-slide">
-								<div class="feo-friends-card" style="background-color: #E8DCC8;"></div>
-							</div>
-
-							<!-- Slide 3: quadrato blu -->
-							<div class="swiper-slide">
-								<div class="feo-friends-card" style="background-color: #23222D;"></div>
+								<div class="feo-friends-card overflow-hidden">
+									<?php if ($card2_id) : ?>
+										<?php echo get_custom_responsive_image($card2_id, 'large', 'block w-full h-full object-cover'); ?>
+									<?php else : ?>
+										<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/06/98.webp'); ?>" alt="Casal Velino al centro del mondo" class="block w-full h-full object-cover" loading="lazy">
+									<?php endif; ?>
+								</div>
 							</div>
 
 						</div>
