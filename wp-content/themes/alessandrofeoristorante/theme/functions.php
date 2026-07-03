@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.48');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.49');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -156,6 +156,14 @@ function alessandrofeoristorante_scripts()
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
+
+	/*
+	 * Reindirizza alla thank you page dopo l'invio del form di prenotazione.
+	 * Contact Form 7 emette l'evento `wpcf7mailsent` sul DOM solo quando la mail
+	 * è stata inviata con successo: intercettandolo mandiamo l'utente su /grazie/.
+	 */
+	$grazie_redirect = 'document.addEventListener("wpcf7mailsent",function(){window.location.href=' . wp_json_encode( home_url( '/grazie/' ) ) . ';},false);';
+	wp_add_inline_script('alessandrofeoristorante-script', $grazie_redirect);
 }
 add_action('wp_enqueue_scripts', 'alessandrofeoristorante_scripts');
 

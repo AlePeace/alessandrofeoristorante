@@ -1,0 +1,10 @@
+Persone: [persone];
+Data: [data];
+Ora: [ora];
+Telefono: [telefono];
+Richieste: [richieste];
+Accettazione della Privacy Policy: [accettazione];
+Consapevolezza garanzia accettata dall'utente (1 = sì): [conferma-garanzia];
+
+--
+Questa è una notifica che segnala l'invio di un modulo di contatto dal tuo sito web ([_site_title] [_site_url]).

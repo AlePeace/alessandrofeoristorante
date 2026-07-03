@@ -1,0 +1,37 @@
+<div class="riserva-field">
+  [text* nome placeholder "Nome e Cognome"]
+</div>
+
+<div class="riserva-field">
+  [number persone min:1 max:50 placeholder "Quante persone?"]
+</div>
+
+<div class="riserva-field">
+  [text* data id:riserva-data placeholder "GG/MM/AA"]
+</div>
+
+<div class="riserva-field">
+  [text* ora placeholder "A che ora? (es. 20:30)"]
+</div>
+
+<div class="riserva-field">
+  [email* email placeholder "E-Mail"]
+</div>
+
+<div class="riserva-field">
+  [tel* telefono placeholder "Telefono"]
+</div>
+
+<div class="riserva-field">
+  [textarea richieste placeholder "Richieste aggiuntive"]
+</div>
+
+<div class="riserva-acceptance">
+  [acceptance accettazione] La tua esperienza sarà considerata prenotata solo dopo la conferma: ogni cena è un momento unico, e vogliamo che tutto sia perfetto.
+</div>
+
+<div class="riserva-acceptance">
+  [acceptance conferma-garanzia] <span><strong>Sono consapevole che la richiesta di prenotazione non è immediatamente confermata.</strong> La prenotazione sarà considerata accettata e confermata solo dopo aver completato la procedura di garanzia tramite il link che riceverò via e-mail.</span>
+</div>
+
+[submit "INVIA RICHIESTA"]
