@@ -605,15 +605,19 @@ function initFeoFriendsSwiper() {
 
 	// Swiper TESTO — effetto fade, non trascinabile, niente loop.
 	// È lo "schiavo": segue sempre l'immagine per indice.
+	// autoHeight: i testi delle slide hanno lunghezze diverse e con il
+	// fade le slide non attive sono in absolute, quindi senza questo
+	// il contenitore resterebbe alto quanto la prima slide.
 	const textSwiper = new Swiper(textEl, {
 		effect: 'fade',
 		fadeEffect: { crossFade: true },
 		allowTouchMove: false,
+		autoHeight: true,
 		speed: 500,
 	});
 
 	// Swiper IMMAGINI — cards effect, trascinabile. È il "master".
-	// Niente loop: con 2 sole slide il loop sballa la card iniziale.
+	// Niente loop: con poche slide il loop sballa la card iniziale.
 	const imgSwiper = new Swiper(imgEl, {
 		effect: 'cards',
 		grabCursor: true,
@@ -621,7 +625,8 @@ function initFeoFriendsSwiper() {
 	});
 
 	// Quando cambia l'immagine, il testo va sullo stesso indice:
-	// testo[0] ↔ card-1.png, testo[1] ↔ 98.webp. Mai mescolati.
+	// testo[0] ↔ 98.webp, testo[1] ↔ paradisi-del-mare.webp,
+	// testo[2] ↔ card-1.png. Mai mescolati.
 	imgSwiper.on('slideChange', () => {
 		if (textSwiper.activeIndex !== imgSwiper.activeIndex) {
 			textSwiper.slideTo(imgSwiper.activeIndex);
