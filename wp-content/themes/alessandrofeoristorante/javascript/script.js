@@ -102,16 +102,23 @@ document.addEventListener('DOMContentLoaded', () => {
 // HEADER — FASE LUNARE
 // ─────────────────────────────────────────────
 
-const MOON_PHASE_NAMES = [
-	'LUNA NUOVA',
-	'LUNA CRESCENTE',
-	'PRIMO QUARTO',
-	'GIBBOSA CRESCENTE',
-	'LUNA PIENA',
-	'GIBBOSA CALANTE',
-	'ULTIMO QUARTO',
-	'LUNA CALANTE',
-];
+// Tradotte via WPML lato PHP (vedi alessandrofeoristorante_scripts() in
+// functions.php) e passate qui tramite wp_localize_script; fallback italiano
+// se WPML è assente o lo script non è enqueued da WordPress (es. anteprima).
+const MOON_PHASE_NAMES =
+	typeof alessandrofeoristoranteMoonPhases !== 'undefined' &&
+	alessandrofeoristoranteMoonPhases.length === 8
+		? alessandrofeoristoranteMoonPhases
+		: [
+				'LUNA NUOVA',
+				'LUNA CRESCENTE',
+				'PRIMO QUARTO',
+				'GIBBOSA CRESCENTE',
+				'LUNA PIENA',
+				'GIBBOSA CALANTE',
+				'ULTIMO QUARTO',
+				'LUNA CALANTE',
+			];
 
 /**
  * Genera l'SVG della fase lunare.

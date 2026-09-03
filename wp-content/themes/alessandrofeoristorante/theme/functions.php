@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.57');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.58');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -152,6 +152,31 @@ function alessandrofeoristorante_scripts()
 	// CSS generato da esbuild (Swiper, flatpickr, ...) bundled in js/script.css
 	wp_enqueue_style('alessandrofeoristorante-bundle', get_template_directory_uri() . '/js/script.css', array(), ALESSANDROFEORISTORANTE_VERSION);
 	wp_enqueue_script('alessandrofeoristorante-script', get_template_directory_uri() . '/js/script.min.js', array(), ALESSANDROFEORISTORANTE_VERSION, true);
+
+	/*
+	 * Nomi delle fasi lunari (header): generati via JS (calcMoonPhaseIndex()
+	 * in script.js), quindi non passano dal contenuto PHP/ACF che WPML
+	 * traduce normalmente. Li registriamo come stringhe WPML e li passiamo
+	 * già tradotti nella lingua corrente, con fallback italiano hardcoded
+	 * lato JS se WPML è assente.
+	 */
+	$moon_phase_labels_it = array(
+		'LUNA NUOVA',
+		'LUNA CRESCENTE',
+		'PRIMO QUARTO',
+		'GIBBOSA CRESCENTE',
+		'LUNA PIENA',
+		'GIBBOSA CALANTE',
+		'ULTIMO QUARTO',
+		'LUNA CALANTE',
+	);
+	$moon_phase_labels = array();
+	foreach ( $moon_phase_labels_it as $i => $label ) {
+		$string_name = 'moon_phase_' . $i;
+		do_action( 'wpml_register_single_string', 'alessandrofeoristorante', $string_name, $label );
+		$moon_phase_labels[] = apply_filters( 'wpml_translate_single_string', $label, 'alessandrofeoristorante', $string_name );
+	}
+	wp_localize_script( 'alessandrofeoristorante-script', 'alessandrofeoristoranteMoonPhases', $moon_phase_labels );
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
