@@ -34,11 +34,13 @@
 	list-style: none;
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.35rem;
 	margin: 0;
 	padding: 0;
 }
 .lp-lang-switcher a {
+	display: inline-block;
+	padding: 4px 6px !important;
 	color: #ffffff !important;
 	text-decoration: none;
 }
@@ -47,6 +49,19 @@
 }
 .lp-lang-switcher img {
 	display: none;
+}
+/* Mobile: ancora più stretto, per non toccare il logo centrale */
+@media (max-width: 480px) {
+	.lp-lang-switcher,
+	.lp-lang-switcher * {
+		font-size: 0.6rem;
+	}
+	.lp-lang-switcher ul {
+		gap: 0.15rem;
+	}
+	.lp-lang-switcher a {
+		padding: 3px 4px !important;
+	}
 }
 </style>
 
