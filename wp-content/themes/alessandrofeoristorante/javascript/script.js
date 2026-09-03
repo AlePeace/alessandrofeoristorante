@@ -332,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initEventiMarquee();
 	initFeoFriendsSwiper();
 	initRiservaDatepicker();
+	initLandingAdsReveal();
 	// Ricalcola tutte le posizioni ScrollTrigger dopo il rendering iniziale.
 	ScrollTrigger.refresh();
 });
@@ -665,6 +666,42 @@ function initRiservaDatepicker() {
 		minDate: 'today',
 		disableMobile: true, // forza il calendario custom anche su iOS
 	});
+}
+
+// ─────────────────────────────────────────────
+// LANDING ADS — reveal hero + card del form allo scroll
+// (page-prenota-ads.php — no-op su tutte le altre pagine)
+// ─────────────────────────────────────────────
+
+function initLandingAdsReveal() {
+	const hero = document.querySelector('.lp-hero-content');
+	const card = document.querySelector('.lp-form-card');
+	if (!hero && !card) return;
+
+	if (hero) {
+		gsap.fromTo(
+			hero,
+			{ opacity: 0, y: 24 },
+			{ opacity: 1, y: 0, duration: 1.1, ease: 'power2.out' }
+		);
+	}
+
+	if (card) {
+		gsap.fromTo(
+			card,
+			{ opacity: 0, y: 40 },
+			{
+				opacity: 1,
+				y: 0,
+				duration: 1,
+				ease: 'power2.out',
+				scrollTrigger: {
+					trigger: card,
+					start: 'top 85%',
+				},
+			}
+		);
+	}
 }
 
 function initRottaSection() {

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Read(//home/aledev/Local Sites/alessandrofeoristorante/app/public/wp-content/uploads/2026/**)",
+      "Read(//home/aledev/Downloads/**)",
+      "Bash(mkdir -p 2026/07)",
+      "Bash(cwebp -q 82 /home/aledev/Downloads/1.jpg.jpeg -o 2026/07/paradisi-del-mare.webp)",
+      "Bash(php -l theme/template-parts/content/content-home.php)",
+      "Bash(git check-ignore *)",
+      "Bash(awk 'NR>=955 && NR<=1005' theme/template-parts/content/content-home.php)",
+      "Bash(awk -F: '$1>860 && $1<1010')"
+    ]
+  }
+}

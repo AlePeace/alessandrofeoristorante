@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"console.log\\(require\\('./package.json'\\).dependencies.flatpickr\\)\")",
+      "Bash(npm run *)",
+      "Bash(grep -n 'object-cover object-center\\\\|gallery-polaroid-section\\\\|$object_pos\\\\|gallery_images = \\\\[' theme/template-parts/content/content-home.php)"
+    ]
+  }
+}

@@ -1034,7 +1034,7 @@ $text_right = $acf('hero_text_right')
 			</p>
 
 			<!-- Contact Form 7 — sostituisci YOUR_FORM_ID con l'ID del form -->
-			<?php echo do_shortcode('[contact-form-7 id="e1c3e12" title="Riserva il tuo tavolo"]'); ?>
+			<?php echo do_shortcode('[contact-form-7 id="bf84fe2" title="Form Homepage"]'); ?>
 
 		</div>
 

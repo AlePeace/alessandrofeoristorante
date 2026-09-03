@@ -16,7 +16,7 @@ if (! defined('ALESSANDROFEORISTORANTE_VERSION')) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.52');
+	define('ALESSANDROFEORISTORANTE_VERSION', '0.1.57');
 }
 
 if (! defined('ALESSANDROFEORISTORANTE_TYPOGRAPHY_CLASSES')) {
@@ -236,6 +236,13 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * ACF helpers e field group — campi traducibili (WPML) per i template.
+ * Vedi inc/acf-helpers.php per la convenzione di lettura nei template.
+ */
+require get_template_directory() . '/inc/acf-helpers.php';
+require get_template_directory() . '/inc/acf-fields.php';
 
 /**
  * Function responsive image.
