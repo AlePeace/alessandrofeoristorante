@@ -1017,6 +1017,106 @@ $text_right = $acf('hero_text_right')
 	</section>
 
 	<!-- ═══════════════════════════════════════════════
+	     SEZIONE REGALA UN'ESPERIENZA — 3 quadranti voucher
+	     ═══════════════════════════════════════════════ -->
+	<?php
+	$regala_email = 'info@feoristorante.it';
+
+	$regala_quadranti = [
+		[
+			'numero'  => '01',
+			'nome'    => __('Sotto Costa', 'alessandrofeoristorante'),
+			'testo'   => __("Un dialogo delineato tra la freschezza dell'onda e il respiro della costa. Il primo passo per esplorare la nostra idea di cucina, dove ogni sapore profuma di casa.", 'alessandrofeoristorante'),
+			'cta'     => __('Regala Sotto Costa', 'alessandrofeoristorante'),
+			'oggetto' => __('Richiesta Voucher Regalo - Sotto Costa', 'alessandrofeoristorante'),
+			'corpo'   => __("Buongiorno, desidero regalare il voucher per l'esperienza \"Sotto Costa\" per [INSERIRE NUMERO] persone. Vi chiedo gentilmente di indicarmi le modalità di pagamento e i passaggi successivi per l'emissione del regalo. Grazie.", 'alessandrofeoristorante'),
+		],
+		[
+			'numero'  => '02',
+			'nome'    => __('Mare Madre', 'alessandrofeoristorante'),
+			'testo'   => __("Il viaggio verso l'essenza. Un percorso dove la materia si spoglia per mostrare la sua purezza, cercando la verità primordiale di ogni sapore.", 'alessandrofeoristorante'),
+			'cta'     => __('Regala Mare Madre', 'alessandrofeoristorante'),
+			'oggetto' => __('Richiesta Voucher Regalo - Mare Madre', 'alessandrofeoristorante'),
+			'corpo'   => __("Buongiorno, desidero regalare il voucher per l'esperienza \"Mare Madre\" per [INSERIRE NUMERO] persone. Vi chiedo gentilmente di indicarmi le modalità di pagamento e i passaggi successivi per l'emissione del regalo. Grazie.", 'alessandrofeoristorante'),
+		],
+		[
+			'numero'      => '03',
+			'nome'        => __('Libera Rotta', 'alessandrofeoristorante'),
+			'sottotitolo' => __('Valore a scelta', 'alessandrofeoristorante'),
+			'testo'       => __("La libertà è il dono più prezioso. Scegli il valore del tuo regalo per consegnare una mappa bianca, lasciando che i tuoi ospiti si facciano guidare dall'istinto e dai piatti della carta.", 'alessandrofeoristorante'),
+			'cta'         => __('Regala Libera Rotta', 'alessandrofeoristorante'),
+			'oggetto'     => __('Richiesta Voucher Regalo - Libera Rotta', 'alessandrofeoristorante'),
+			'corpo'       => __("Buongiorno, desidero regalare il voucher \"Libera Rotta\". Il valore che intendo caricare sul regalo è di € [INSERIRE CIFRA QUI]. Vi chiedo gentilmente di indicarmi le modalità di pagamento e i passaggi successivi per l'emissione del regalo. Grazie.", 'alessandrofeoristorante'),
+		],
+	];
+	?>
+	<section id="regala" class="regala-section w-full bg-white px-6 py-20 lg:py-32 text-blue overflow-hidden">
+
+		<!-- HEADER -->
+		<div class="max-w-3xl mx-auto text-center mb-16 lg:mb-24">
+
+			<!-- Etichetta typewriter -->
+			<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase mb-3">
+				( &nbsp;Voucher regalo&nbsp; )
+			</p>
+
+			<!-- Titolo principale — New Icon Serif -->
+			<h2 class="font-icon-serif text-[clamp(2.2rem,5.5vw,4.5rem)] uppercase leading-[1.05] mb-8">
+				Regala un&rsquo;esperienza<br>alla mia tavola
+			</h2>
+
+			<!-- Testo introduttivo — typewriter -->
+			<p class="font-typewriter text-[clamp(0.72rem,0.95vw,0.85rem)] tracking-wide leading-[1.9] max-w-2xl mx-auto">
+				Scegli un percorso degustazione tracciato, oppure lascia ai tuoi ospiti la libertà di navigare la nostra carta. Seleziona l&rsquo;esperienza, si aprirà un&rsquo;email per definire insieme i dettagli del voucher.
+			</p>
+
+		</div>
+
+		<!-- I TRE QUADRANTI -->
+		<div class="regala-grid max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-blue" style="border-top: 1px solid #23222D; border-bottom: 1px solid #23222D;">
+
+			<?php foreach ($regala_quadranti as $q) :
+				$mailto = 'mailto:' . $regala_email
+					. '?subject=' . rawurlencode($q['oggetto'])
+					. '&body=' . rawurlencode($q['corpo']);
+			?>
+				<div class="regala-quadrante flex flex-col items-center text-center px-8 py-14 lg:py-20">
+
+					<!-- Numero quadrante -->
+					<span class="font-typewriter text-[0.6rem] tracking-[0.25em] uppercase opacity-50 mb-5">
+						Quadrante <?php echo esc_html($q['numero']); ?>
+					</span>
+
+					<!-- Nome esperienza — New Icon Serif -->
+					<h3 class="font-icon-serif text-[clamp(1.8rem,3.2vw,2.4rem)] uppercase leading-tight mb-3">
+						<?php echo esc_html($q['nome']); ?>
+					</h3>
+
+					<?php if (!empty($q['sottotitolo'])) : ?>
+						<!-- Sottotitolo — Morning Memories gold -->
+						<span class="font-script text-gold text-xl lg:text-2xl -rotate-2 mb-4 block">
+							<?php echo esc_html($q['sottotitolo']); ?>
+						</span>
+					<?php endif; ?>
+
+					<!-- Testo descrittivo — typewriter -->
+					<p class="font-typewriter text-[0.85rem] leading-[1.9] tracking-wide max-w-xs mb-10">
+						<?php echo esc_html($q['testo']); ?>
+					</p>
+
+					<!-- CTA — apre email precompilata -->
+					<a href="<?php echo esc_url($mailto); ?>" class="mt-auto inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+						<?php echo esc_html($q['cta']); ?>
+					</a>
+
+				</div>
+			<?php endforeach; ?>
+
+		</div>
+
+	</section>
+
+	<!-- ═══════════════════════════════════════════════
 	     SEZIONE RISERVA IL TUO TAVOLO — form prenotazione
 	     ═══════════════════════════════════════════════ -->
 	<section id="form" class="riserva-section w-full bg-blue px-6 py-20 lg:py-32">
