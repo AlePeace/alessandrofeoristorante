@@ -1024,7 +1024,7 @@ $text_right = $acf('hero_text_right')
 
 	$regala_quadranti = [
 		[
-			'numero'  => '01',
+			'numero'  => '1',
 			'nome'    => __('Sotto Costa', 'alessandrofeoristorante'),
 			'testo'   => __("Un dialogo delineato tra la freschezza dell'onda e il respiro della costa. Il primo passo per esplorare la nostra idea di cucina, dove ogni sapore profuma di casa.", 'alessandrofeoristorante'),
 			'cta'     => __('Regala Sotto Costa', 'alessandrofeoristorante'),
@@ -1032,7 +1032,7 @@ $text_right = $acf('hero_text_right')
 			'corpo'   => __("Buongiorno, desidero regalare il voucher per l'esperienza \"Sotto Costa\" per [INSERIRE NUMERO] persone. Vi chiedo gentilmente di indicarmi le modalità di pagamento e i passaggi successivi per l'emissione del regalo. Grazie.", 'alessandrofeoristorante'),
 		],
 		[
-			'numero'  => '02',
+			'numero'  => '2',
 			'nome'    => __('Mare Madre', 'alessandrofeoristorante'),
 			'testo'   => __("Il viaggio verso l'essenza. Un percorso dove la materia si spoglia per mostrare la sua purezza, cercando la verità primordiale di ogni sapore.", 'alessandrofeoristorante'),
 			'cta'     => __('Regala Mare Madre', 'alessandrofeoristorante'),
@@ -1040,7 +1040,7 @@ $text_right = $acf('hero_text_right')
 			'corpo'   => __("Buongiorno, desidero regalare il voucher per l'esperienza \"Mare Madre\" per [INSERIRE NUMERO] persone. Vi chiedo gentilmente di indicarmi le modalità di pagamento e i passaggi successivi per l'emissione del regalo. Grazie.", 'alessandrofeoristorante'),
 		],
 		[
-			'numero'      => '03',
+			'numero'      => '3',
 			'nome'        => __('Libera Rotta', 'alessandrofeoristorante'),
 			'sottotitolo' => __('Valore a scelta', 'alessandrofeoristorante'),
 			'testo'       => __("La libertà è il dono più prezioso. Scegli il valore del tuo regalo per consegnare una mappa bianca, lasciando che i tuoi ospiti si facciano guidare dall'istinto e dai piatti della carta.", 'alessandrofeoristorante'),
@@ -1073,18 +1073,18 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<!-- I TRE QUADRANTI -->
-		<div class="regala-grid max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-blue" style="border-top: 1px solid #23222D; border-bottom: 1px solid #23222D;">
+		<div class="regala-grid max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-blue border border-blue">
 
 			<?php foreach ($regala_quadranti as $q) :
 				$mailto = 'mailto:' . $regala_email
 					. '?subject=' . rawurlencode($q['oggetto'])
 					. '&body=' . rawurlencode($q['corpo']);
 			?>
-				<div class="regala-quadrante flex flex-col items-center text-center px-8 py-14 lg:py-20">
+				<div class="regala-quadrante group flex flex-col items-center text-center px-8 py-14 lg:py-20 transition-colors duration-300 hover:bg-blue hover:text-white">
 
-					<!-- Numero quadrante -->
+					<!-- Numero rotta -->
 					<span class="font-typewriter text-[0.6rem] tracking-[0.25em] uppercase opacity-50 mb-5">
-						Quadrante <?php echo esc_html($q['numero']); ?>
+						Rotta <?php echo esc_html($q['numero']); ?>
 					</span>
 
 					<!-- Nome esperienza — New Icon Serif -->
@@ -1105,7 +1105,7 @@ $text_right = $acf('hero_text_right')
 					</p>
 
 					<!-- CTA — apre email precompilata -->
-					<a href="<?php echo esc_url($mailto); ?>" class="mt-auto inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+					<a href="<?php echo esc_url($mailto); ?>" class="mt-auto inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue border border-blue py-4 px-8 transition-colors duration-300 group-hover:text-white group-hover:border-white">
 						<?php echo esc_html($q['cta']); ?>
 					</a>
 
