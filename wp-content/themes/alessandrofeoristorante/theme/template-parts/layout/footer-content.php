@@ -108,7 +108,7 @@ $logo_id        = attachment_url_to_postid($logo_image_url);
 					Mercoledì - Chiusi<br>
 					Giovedì - Aperti a cena<br>
 					Venerdì - Aperti a cena<br>
-					Sabato - Aperti a cena<br>
+					Sabato - Aperti a pranzo e cena<br>
 					Domenica - Aperti a pranzo</p>
 
 				<!-- Social icons -->
