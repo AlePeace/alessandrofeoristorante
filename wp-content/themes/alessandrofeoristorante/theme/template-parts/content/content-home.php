@@ -632,12 +632,19 @@ $text_right = $acf('hero_text_right')
 		</div>
 
 		<?php
+		// Tutte le tab aprono la Carta di Navigazione in un popup (vedi #menu-pdf-modal).
+		// L'href resta come fallback: senza JS il PDF si apre in una nuova scheda.
+		$menu_pdf_url   = get_template_directory_uri() . '/pdf/Carta_Navigazione.pdf';
+		$menu_tab_attrs = function () use ($menu_pdf_url) {
+			return 'href="' . esc_url($menu_pdf_url) . '" target="_blank" data-menu-pdf="' . esc_url($menu_pdf_url) . '"';
+		};
+
 		$le_tre_rotte_id      = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/le_tre_rotte.jpg');
 		$navigazione_libera_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/03/navigazione_libera.jpg');
 		?>
 
 		<!-- TAB 1: LE TRE ROTTE ─────────────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/01-LE-DUE-ROTTE-MENU-DEGUSTAZIONE.pdf'); ?>" target="_blank" class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
+		<a <?php echo $menu_tab_attrs(); ?> class="menu-tab block relative cursor-pointer select-none group transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop: titolo e sottotitolo inline -->
@@ -674,7 +681,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 2: NAVIGAZIONE LIBERA ───────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/02-NAVIGAZIONE-LIBERA-MENU-ALLA-CARTA.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
+		<a <?php echo $menu_tab_attrs(); ?> class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
@@ -712,7 +719,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 3: DOLCI ───────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/05/03-I-TESORI-DELLA-COSTA-MENU-DOLCI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
+		<a <?php echo $menu_tab_attrs(); ?> class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue" style="border-bottom: 1px solid #23222D;">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
@@ -746,7 +753,7 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 		<!-- TAB 4: CARTA VINI ───────────── -->
-		<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/06/04-CARTA-VINI.pdf'); ?>" target="_blank" class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
+		<a <?php echo $menu_tab_attrs(); ?> class="menu-tab block group relative cursor-pointer select-none transition-all duration-500 ease-in-out hover:bg-blue">
 
 			<div class="relative z-10 px-6 lg:px-14 py-10 lg:py-16">
 				<!-- Desktop -->
@@ -780,6 +787,104 @@ $text_right = $acf('hero_text_right')
 		</a>
 
 	</section>
+
+	<!-- ═══════════════════════════════════════════════
+	     POPUP PDF MENÙ — aperto da tutte le .menu-tab (initMenuPdfModal)
+	     Le pagine del PDF vengono disegnate su canvas con PDF.js
+	     ═══════════════════════════════════════════════ -->
+	<style>
+		#menu-pdf-modal {
+			position: fixed;
+			inset: 0;
+			z-index: 10000; /* sopra l'header (z:9999) */
+			display: none;
+			background: rgba(35, 34, 45, 0.92);
+		}
+
+		#menu-pdf-modal.is-open {
+			display: block;
+		}
+
+		#menu-pdf-modal .mpm-scroll {
+			height: 100%;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			-webkit-overflow-scrolling: touch;
+			padding: 4.5rem 1rem 2rem;
+		}
+
+		#menu-pdf-modal .mpm-pages {
+			width: 100%;
+			max-width: 820px;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		#menu-pdf-modal .mpm-pages canvas {
+			display: block;
+			width: 100%;
+			height: auto;
+			background: #ffffff;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+		}
+
+		#menu-pdf-modal .mpm-close {
+			position: fixed;
+			top: 1.25rem;
+			right: 1.25rem;
+			z-index: 1;
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 9999px;
+			background: #ffffff;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+		}
+
+		#menu-pdf-modal .mpm-close:hover {
+			transform: rotate(90deg);
+		}
+
+		#menu-pdf-modal .mpm-status {
+			color: #ffffff;
+			text-align: center;
+			padding: 3rem 0;
+		}
+
+		#menu-pdf-modal .mpm-status a {
+			text-decoration: underline;
+		}
+
+		@media (min-width: 1024px) {
+			#menu-pdf-modal .mpm-close {
+				top: 2rem;
+				right: 2rem;
+			}
+		}
+	</style>
+	<div
+		id="menu-pdf-modal"
+		data-lenis-prevent
+		role="dialog"
+		aria-modal="true"
+		aria-hidden="true"
+		aria-label="<?php esc_attr_e('Carta di Navigazione', 'alessandrofeoristorante'); ?>"
+	>
+		<button type="button" class="mpm-close" aria-label="<?php esc_attr_e('Chiudi', 'alessandrofeoristorante'); ?>">
+			<svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d="M20 2L2 20M2 2L20 20" stroke="#23222D" stroke-width="2.5" stroke-linecap="round"/>
+			</svg>
+		</button>
+		<div class="mpm-scroll">
+			<p class="mpm-status font-typewriter text-xs uppercase tracking-widest"></p>
+			<div class="mpm-pages"></div>
+		</div>
+	</div>
 
 	<!-- ═══════════════════════════════════════════════
 	     SEZIONE GALLERY POLAROID 2 — 4 immagini, nessun testo

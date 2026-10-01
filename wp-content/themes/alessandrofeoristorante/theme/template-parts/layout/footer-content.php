@@ -103,10 +103,10 @@ $logo_id        = attachment_url_to_postid($logo_image_url);
 			<!-- Colonna destra: orari + social -->
 			<div class="text-sm font-typewriter tracking-wide text-center md:text-right">
 				<p class="font-bold uppercase tracking-widest mb-2">Orari</p>
-				<p>Lunedì - Aperti a cena<br>
-					Martedì - Aperti a cena<br>
+				<p>Lunedì - Chiusi<br>
+					Martedì - Chiusi<br>
 					Mercoledì - Chiusi<br>
-					Giovedì - Aperti a cena<br>
+					Giovedì - Chiusi<br>
 					Venerdì - Aperti a cena<br>
 					Sabato - Aperti a pranzo e cena<br>
 					Domenica - Aperti a pranzo</p>

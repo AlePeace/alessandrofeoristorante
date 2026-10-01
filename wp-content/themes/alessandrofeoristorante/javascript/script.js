@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initRottaSection(); // calcolino le loro posizioni
 	initGalleryPolaroid();
 	initMenuSection();
+	initMenuPdfModal();
 	initEventiMarquee();
 	initFeoFriendsSwiper();
 	initRiservaDatepicker();
@@ -1007,6 +1008,167 @@ function initMenuSection() {
 				overwrite: true,
 			});
 		});
+	});
+}
+
+// ─────────────────────────────────────────────
+// MENU PDF MODAL — le .menu-tab aprono il PDF in un popup.
+// Il PDF viene disegnato su canvas con PDF.js (caricato da CDN solo al
+// primo click): gli iframe con PDF non funzionano su Android e su iOS
+// mostrano solo la prima pagina.
+// ─────────────────────────────────────────────
+
+const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174';
+let pdfjsPromise = null;
+
+function loadPdfJs() {
+	if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+	if (pdfjsPromise) return pdfjsPromise;
+
+	pdfjsPromise = new Promise((resolve, reject) => {
+		const script = document.createElement('script');
+		script.src = `${PDFJS_CDN}/pdf.min.js`;
+		script.onload = () => {
+			window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_CDN}/pdf.worker.min.js`;
+			resolve(window.pdfjsLib);
+		};
+		script.onerror = () => {
+			pdfjsPromise = null;
+			reject(new Error('PDF.js non caricato'));
+		};
+		document.head.appendChild(script);
+	});
+	return pdfjsPromise;
+}
+
+function initMenuPdfModal() {
+	const modal = document.getElementById('menu-pdf-modal');
+	const tabs = document.querySelectorAll('[data-menu-pdf]');
+	if (!modal || !tabs.length) return;
+
+	// Spostato nel body: eventuali transform degli antenati
+	// romperebbero il position:fixed
+	document.body.appendChild(modal);
+
+	const closeBtn = modal.querySelector('.mpm-close');
+	const scrollEl = modal.querySelector('.mpm-scroll');
+	const pagesEl = modal.querySelector('.mpm-pages');
+	const statusEl = modal.querySelector('.mpm-status');
+
+	let isOpen = false;
+	let renderedUrl = null;
+	let lastTrigger = null;
+
+	async function renderPdf(url) {
+		if (renderedUrl === url) return;
+
+		pagesEl.innerHTML = '';
+		statusEl.textContent = 'Caricamento…';
+		statusEl.hidden = false;
+
+		try {
+			const pdfjsLib = await loadPdfJs();
+			const pdf = await pdfjsLib.getDocument(url).promise;
+
+			// Risoluzione: larghezza del contenitore × densità schermo
+			// (minimo 2x per restare leggibile anche zoomando su mobile)
+			const targetWidth =
+				pagesEl.clientWidth * Math.max(window.devicePixelRatio || 1, 2);
+
+			for (let n = 1; n <= pdf.numPages; n++) {
+				const page = await pdf.getPage(n);
+				const baseViewport = page.getViewport({ scale: 1 });
+				const viewport = page.getViewport({
+					scale: Math.min(targetWidth, 2400) / baseViewport.width,
+				});
+
+				const canvas = document.createElement('canvas');
+				canvas.width = Math.floor(viewport.width);
+				canvas.height = Math.floor(viewport.height);
+				pagesEl.appendChild(canvas);
+
+				await page.render({
+					canvasContext: canvas.getContext('2d'),
+					viewport,
+				}).promise;
+			}
+
+			statusEl.hidden = true;
+			renderedUrl = url;
+		} catch (err) {
+			console.error(err);
+			pagesEl.innerHTML = '';
+			statusEl.innerHTML = '';
+			const link = document.createElement('a');
+			link.href = url;
+			link.target = '_blank';
+			link.rel = 'noopener';
+			link.textContent = 'Apri il menù in PDF';
+			statusEl.appendChild(link);
+		}
+	}
+
+	function openModal(url, trigger) {
+		if (isOpen) return;
+		isOpen = true;
+		lastTrigger = trigger;
+
+		modal.classList.add('is-open');
+		modal.setAttribute('aria-hidden', 'false');
+		document.body.style.overflow = 'hidden';
+		if (window.stopSmoothScroll) window.stopSmoothScroll();
+		scrollEl.scrollTop = 0;
+
+		gsap.fromTo(
+			modal,
+			{ opacity: 0 },
+			{ opacity: 1, duration: 0.4, ease: 'power2.out' }
+		);
+		gsap.fromTo(
+			pagesEl,
+			{ y: 40 },
+			{ y: 0, duration: 0.6, ease: 'power3.out' }
+		);
+
+		closeBtn.focus();
+		renderPdf(url);
+	}
+
+	function closeModal() {
+		if (!isOpen) return;
+
+		gsap.to(modal, {
+			opacity: 0,
+			duration: 0.3,
+			ease: 'power2.in',
+			onComplete: () => {
+				isOpen = false;
+				modal.classList.remove('is-open');
+				modal.setAttribute('aria-hidden', 'true');
+				document.body.style.overflow = '';
+				gsap.set([modal, pagesEl], { clearProps: 'opacity,transform' });
+				if (window.startSmoothScroll) window.startSmoothScroll();
+				if (lastTrigger) lastTrigger.focus();
+			},
+		});
+	}
+
+	tabs.forEach((tab) => {
+		tab.addEventListener('click', (e) => {
+			e.preventDefault();
+			openModal(tab.dataset.menuPdf, tab);
+		});
+	});
+
+	closeBtn.addEventListener('click', closeModal);
+
+	// Click sullo sfondo (fuori dalle pagine) chiude il popup
+	scrollEl.addEventListener('click', (e) => {
+		if (e.target === scrollEl) closeModal();
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && isOpen) closeModal();
 	});
 }
 
