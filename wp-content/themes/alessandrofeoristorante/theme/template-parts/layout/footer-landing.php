@@ -29,7 +29,7 @@ $lp_email           = alessandrofeoristorante_field( 'lp_footer_email', 'info@fe
 			<a href="mailto:<?php echo esc_attr( $lp_email ); ?>" class="hover:text-gold transition-colors"><?php echo esc_html( $lp_email ); ?></a>
 		</p>
 
-		<p class="opacity-75 mt-1"><?php alessandrofeoristorante_the_field( 'lp_footer_orari', 'Lunedì - Chiusi<br>Martedì - Chiusi<br>Mercoledì - Chiusi<br>Giovedì - Chiusi<br>Venerdì - Aperti a cena<br>Sabato - Aperti a pranzo e cena<br>Domenica - Aperti a pranzo' ); ?></p>
+		<p class="opacity-75 mt-1"><?php alessandrofeoristorante_the_field( 'lp_footer_orari', 'Chiusi per ferie' ); ?></p>
 
 		<p class="text-xs opacity-50 tracking-wide mt-6">
 			&copy; <?php echo esc_html( date( 'Y' ) ); ?> Alessandro Feo

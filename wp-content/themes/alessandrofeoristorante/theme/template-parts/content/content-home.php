@@ -957,6 +957,40 @@ $text_right = $acf('hero_text_right')
 				<div class="swiper feo-friends-text-swiper w-full">
 					<div class="swiper-wrapper">
 
+						<!-- Slide 0: Due Forchette Gambero Rosso -->
+						<div class="swiper-slide">
+							<div class="flex flex-col gap-6">
+
+								<!-- Etichetta typewriter -->
+								<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase m-0">
+									( &nbsp;I riconoscimenti&nbsp; )
+								</p>
+
+								<!-- Titolo principale — New Icon Serif -->
+								<h2 class="font-icon-serif text-[clamp(3rem,7vw,6rem)] uppercase leading-[1.05] m-0">
+									Due Forchette nella Guida Ristoranti d&rsquo;Italia di Gambero Rosso
+								</h2>
+
+								<!-- Sottotitolo — stile etichetta typewriter -->
+								<p class="font-typewriter text-[clamp(0.55rem,1.1vw,0.75rem)] tracking-[0.25em] uppercase m-0">
+									Alessandro Feo Ristorante conquista le Due Forchette nella Guida Ristoranti d&rsquo;Italia di Gambero Rosso
+								</p>
+
+								<!-- Testo descrittivo — typewriter -->
+								<div class="font-typewriter text-[clamp(0.85rem,1.05vw,1rem)] leading-[1.9] tracking-wide max-w-md">
+									<p class="m-0">Un riconoscimento prestigioso del ristorante di Casal Velino che celebra la visione gastronomica dello chef e valorizza il patrimonio culturale e culinario del Cilento.</p>
+								</div>
+
+								<!-- CTA Button -->
+								<div class="mt-4">
+									<a href="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/11/Comunicato-Due-Forchette-Gambero-Rosso.pdf'); ?>" target="_blank" rel="noopener" class="inline-block font-typewriter text-[clamp(0.6rem,0.9vw,0.75rem)] rounded-full tracking-[0.2em] uppercase text-blue py-4 px-8 transition-colors duration-300 hover:bg-blue hover:text-white" style="border: 1px solid #23222D;">
+										Leggi comunicato
+									</a>
+								</div>
+
+							</div>
+						</div>
+
 						<!-- Slide 1: Casal Velino al centro del mondo -->
 						<div class="swiper-slide">
 							<div class="flex flex-col gap-6">
@@ -1069,6 +1103,20 @@ $text_right = $acf('hero_text_right')
 				<div class="aspect-square w-full max-w-[420px]">
 					<div class="swiper feo-friends-swiper">
 						<div class="swiper-wrapper">
+
+							<!-- Slide 0: gambero-rosso-due-forchette.webp (Gambero Rosso) -->
+							<?php
+							$card0_id = attachment_url_to_postid(get_site_url() . '/wp-content/uploads/2026/11/gambero-rosso-due-forchette.webp');
+							?>
+							<div class="swiper-slide">
+								<div class="feo-friends-card">
+									<?php if ($card0_id) : ?>
+										<?php echo get_custom_responsive_image($card0_id, 'large', 'block w-full h-full object-cover'); ?>
+									<?php else : ?>
+										<img src="<?php echo esc_url(get_site_url() . '/wp-content/uploads/2026/11/gambero-rosso-due-forchette.webp'); ?>" alt="Alessandro Feo Ristorante — Due Forchette Gambero Rosso 2027" class="block w-full h-full object-cover" loading="lazy">
+									<?php endif; ?>
+								</div>
+							</div>
 
 							<!-- Slide 1: 98.webp (Casal Velino) -->
 							<?php

@@ -145,7 +145,7 @@ function alessandrofeoristorante_register_prenota_ads_fields() {
 				alessandrofeoristorante_acf( 'lp_footer_telefono_testo', 'Telefono — testo visibile', 'text', '+39 328 8937 083' ),
 				alessandrofeoristorante_acf( 'lp_footer_telefono_href', 'Telefono — numero per il link tel: (senza spazi)', 'text', '+393288937083', $copy_once ),
 				alessandrofeoristorante_acf( 'lp_footer_email', 'Email', 'text', 'info@feoristorante.it', $copy_once ),
-				alessandrofeoristorante_acf( 'lp_footer_orari', 'Orari', 'textarea', 'Lunedì - Chiusi<br>Martedì - Chiusi<br>Mercoledì - Chiusi<br>Giovedì - Chiusi<br>Venerdì - Aperti a cena<br>Sabato - Aperti a pranzo e cena<br>Domenica - Aperti a pranzo', array( 'rows' => 7, 'new_lines' => '' ) ),
+				alessandrofeoristorante_acf( 'lp_footer_orari', 'Orari', 'textarea', 'Chiusi per ferie', array( 'rows' => 7, 'new_lines' => '' ) ),
 				alessandrofeoristorante_acf( 'lp_footer_privacy_label', 'Link — etichetta Privacy Policy', 'text', 'Privacy Policy' ),
 				alessandrofeoristorante_acf( 'lp_footer_cookie_label', 'Link — etichetta Cookie policy', 'text', 'Cookie policy' ),
 			),
