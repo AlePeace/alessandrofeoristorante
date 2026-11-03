@@ -968,7 +968,7 @@ $text_right = $acf('hero_text_right')
 
 								<!-- Titolo principale — New Icon Serif -->
 								<h2 class="font-icon-serif text-[clamp(3rem,7vw,6rem)] uppercase leading-[1.05] m-0">
-									Due Forchette nella Guida Ristoranti d&rsquo;Italia di Gambero Rosso
+									Due Forchette Gambero Rosso
 								</h2>
 
 								<!-- Sottotitolo — stile etichetta typewriter -->
